@@ -10,6 +10,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
@@ -38,6 +39,9 @@ public class DrivePID extends Command {
   protected void initialize() {
     d_pid.reset();
     a_pid.reset();
+
+    lastPos = drive.getDistance();
+    lastAng = drive.getAngle();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,6 +50,9 @@ public class DrivePID extends Command {
     double dt = Timer.getFPGATimestamp() - lastTime;
     double d_vel = (drive.getDistance() - lastPos) / dt; 
     double a_vel = (drive.getAngle() - lastAng) / dt;
+
+    SmartDashboard.putNumber("d_vel", d_vel);
+    SmartDashboard.putNumber("a_vel", a_vel);
 
     double driveJoy = OI.getInstance().getY_Left();
     double angleJoy = OI.getInstance().getX_Right();    

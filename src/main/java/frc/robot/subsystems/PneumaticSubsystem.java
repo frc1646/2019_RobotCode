@@ -19,26 +19,13 @@ import frc.robot.RobotMap;
 public class PneumaticSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private DoubleSolenoid ds;
+  
 	private static PneumaticSubsystem instance;
 	
 	private PneumaticSubsystem() {
-		ds = new DoubleSolenoid(RobotMap.DS_PORT_A, RobotMap.DS_PORT_B);
+		
 	}
 	
-	public void extend() {
-		ds.set(Value.kForward);
-	}
-	
-	public void retract() {
-    ds.set(Value.kReverse);
-	}
-	
-	public void off() {
-		ds.set(Value.kOff);
-	}
-	
-
 	public static PneumaticSubsystem getInstance() {
 		if (instance == null) {
 			instance = new PneumaticSubsystem();

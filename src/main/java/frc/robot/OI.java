@@ -10,8 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CycleDriveMode;
-import frc.robot.commands.ExtendPneumatic;
-import frc.robot.commands.RetractPneumatic;
+import frc.robot.commands.ShiftDown;
+import frc.robot.commands.ShiftUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -30,8 +30,8 @@ public class OI {
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
 
-    yButton.whenPressed(new ExtendPneumatic());
-    aButton.whenPressed(new RetractPneumatic());
+    yButton.whenPressed(new ShiftUp());
+    aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
   }
 

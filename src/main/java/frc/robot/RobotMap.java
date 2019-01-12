@@ -37,8 +37,8 @@ public class RobotMap {
 
 
   /* PneumaticSubsystem */
-  public static final int DS_PORT_A = 0;
-  public static final int DS_PORT_B = 1;
+  public static final int SHIFTER_PORT_A = 0;
+  public static final int SHIFTER_PORT_B = 1;
 
 
   // For example to map the left and right motors, you could define the
