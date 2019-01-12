@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -7,18 +8,27 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.CheesyPID;
 
-public class DriveWithPID extends PIDCommand {
+public class DrivePID extends Command {
 
-  private DriveSubsystem drive;
-
-  public DriveWithPID() {
-    super(Constants.DRIVE_VEL_P, Constants.DRIVE_VEL_I, Constants.DRIVE_VEL_D);
+  private DriveSubsystem drive; 
+  private CheesyPID d_pid; // translational pid
+  private CheesyPID a_pid;
+  private double lastTime;
+  private double lastPos;
+  private double lastAng;
+  public DrivePID() {
     requires(drive = DriveSubsystem.getInstance());
+    d_pid = new CheesyPID(Constants.DRIVE_VEL_P, Constants.DRIVE_VEL_I,
+                          Constants.DRIVE_VEL_D);
+    a_pid = new CheesyPID(Constants.ANGLE_VEL_P, Constants.ANGLE_VEL_I,
+                          Constants.ANGLE_VEL_D);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,11 +36,28 @@ public class DriveWithPID extends PIDCommand {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    d_pid.reset();
+    a_pid.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double dt = Timer.getFPGATimestamp() - lastTime;
+    double d_vel = (drive.getDistance() - lastPos) / dt; 
+    double a_vel = (drive.getAngle() - lastAng) / dt;
+
+    double driveJoy = OI.getInstance().getY_Left();
+    double angleJoy = OI.getInstance().getX_Right();    
+
+    d_pid.setSetpoint(driveJoy * Constants.DRIVE_MAX_VEL);
+    a_pid.setSetpoint(angleJoy * Constants.ANGLE_MAX_VEL);
+
+    drive.arcadeDrive(d_pid.calculate(d_vel, dt), a_pid.calculate(a_vel, dt));
+
+    lastTime = Timer.getFPGATimestamp();
+    lastPos = drive.getDistance();
+    lastAng = drive.getAngle();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -48,15 +75,5 @@ public class DriveWithPID extends PIDCommand {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    return 0;
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-
   }
 }

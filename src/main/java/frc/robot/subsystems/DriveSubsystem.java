@@ -47,7 +47,11 @@ public class DriveSubsystem extends Subsystem {
  	 
  	public void resetGyro() { 
  		gyro.reset(); 
- 	} 
+   } 
+   
+  public double getDistance() {
+    return 0;
+  }
  	 
  	public void calibrateGyro() { 
  		gyro.calibrate(); 
