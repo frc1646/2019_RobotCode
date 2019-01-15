@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
 import frc.robot.RobotMap;
@@ -27,14 +29,15 @@ public class DriveSubsystem extends Subsystem {
 
   private ADXRS450_Gyro gyro;
 	private DriveSide leftSide, rightSide; 
-   private static DriveSubsystem instance;
-    
-	 
+ 	private static DriveSubsystem instance; 
+  private DoubleSolenoid shifter;
+
  	private DriveSubsystem() { 
  		gyro = new ADXRS450_Gyro(); 
  		leftSide = new DriveSide(RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.INV_1, RobotMap.INV_2); 
  		rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT, RobotMap.INV_3, RobotMap.INV_4); 
- 	} 
+    shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
+  } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
  		leftSide.setPower(leftPower); 
@@ -58,6 +61,10 @@ public class DriveSubsystem extends Subsystem {
  		gyro.calibrate(); 
  	}
   
+  public double getCurrent() {
+    return (Math.abs(leftSide.getCurrent()) + Math.abs(rightSide.getCurrent())) / 2;
+  }
+
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy()); 
   } 
@@ -65,13 +72,6 @@ public class DriveSubsystem extends Subsystem {
 public void tankDrive(double leftPow, double rightPow) {
   leftPow = OI.getInstance().getY_Left();
   rightPow = OI.getInstance().getY_Right();
-
-  if (leftPow < 0.05 && leftPow > -0.05) {
-    leftPow = 0;
-  } 
-  if (rightPow < 0.05 && rightPow > -0.05) {
-    rightPow = 0;
-  }
 
   setSidePower(leftPow, rightPow);
 }  
@@ -86,6 +86,20 @@ public static DriveSubsystem getInstance() {
   } 
   return instance; 
 } 
+
+
+public void shiftUp() {
+  shifter.set(Value.kForward);
+}
+
+public void shiftDown() {
+  shifter.set(Value.kReverse);
+}
+
+public void shiftOff() {
+  shifter.set(Value.kOff);
+}
+
 
 private class DriveSide { 
     private TalonSRX master, slave;
@@ -103,5 +117,9 @@ private class DriveSide {
       master.set(ControlMode.PercentOutput, power);
       slave.set(ControlMode.PercentOutput, power);
     } 
+
+    public double getCurrent() {
+      return (master.getOutputCurrent() + slave.getOutputCurrent()) / 2;
+    }
   }
 }

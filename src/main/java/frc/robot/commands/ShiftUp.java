@@ -9,13 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 
-public class ExtendPneumatic extends Command {
+public class ShiftUp extends Command {
 
-  private PneumaticSubsystem pneumatics;
-  public ExtendPneumatic() {
-    requires(pneumatics = PneumaticSubsystem.getInstance());
+  private DriveSubsystem drive;
+  public ShiftUp() {
+    requires(drive = DriveSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,7 +24,7 @@ public class ExtendPneumatic extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    pneumatics.extend();
+    drive.shiftUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
