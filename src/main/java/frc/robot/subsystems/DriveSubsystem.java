@@ -27,7 +27,8 @@ public class DriveSubsystem extends Subsystem {
 
   private ADXRS450_Gyro gyro;
 	private DriveSide leftSide, rightSide; 
- 	private static DriveSubsystem instance; 
+   private static DriveSubsystem instance;
+    
 	 
  	private DriveSubsystem() { 
  		gyro = new ADXRS450_Gyro(); 
