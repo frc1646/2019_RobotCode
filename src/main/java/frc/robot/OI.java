@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CycleDriveMode;
+
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 
@@ -21,7 +22,7 @@ public class OI {
 
   private static OI instance;
   private Joystick driver_controller;
-  private JoystickButton yButton, aButton, startButton;
+  private JoystickButton yButton, aButton, startButton, xButton;
 
   private OI() {
     driver_controller = new Joystick(RobotMap.DRIVER_CONTROLLER_PORT);
@@ -29,10 +30,12 @@ public class OI {
     yButton = new JoystickButton(driver_controller, 4);
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
+    xButton = new JoystickButton(driver_controller, 2);
 
     yButton.whenPressed(new ShiftUp());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
+    xButton.whileHeld(new DriveToBall());
   }
 
   public double getY_Left() {
