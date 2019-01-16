@@ -45,13 +45,13 @@ public class Robot extends TimedRobot {
     m_oi = OI.getInstance();
     driveSubsystem = DriveSubsystem.getInstance();
     pneumatics = PneumaticSubsystem.getInstance();
-    camera = CameraSubsystem.getInstance();
+    //camera = CameraSubsystem.getInstance();
 
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
     //initialize camera server
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**

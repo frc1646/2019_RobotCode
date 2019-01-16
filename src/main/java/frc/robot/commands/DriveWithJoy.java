@@ -27,6 +27,8 @@ public class DriveWithJoy extends Command {
   private double lastPos;
   private double lastAng;
   private double lastTime;
+  private double lastPow_drive;
+  private double lastPow_turn;
 
   public DriveWithJoy() {
     requires(drive = DriveSubsystem.getInstance());
@@ -47,9 +49,10 @@ public class DriveWithJoy extends Command {
     double d_vel = (drive.getDistance() - lastPos) / dt; 
     double a_vel = (drive.getAngle() - lastAng) / dt;
 
+
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
-    SmartDashboard.putNumber("current", drive.getCurrent());
+    SmartDashboard.putNumber("current", drive.getCurrent()); 
 
     double leftPow = OI.getInstance().getY_Left();
     double rightPow = OI.getInstance().getX_Right();
@@ -70,15 +73,19 @@ public class DriveWithJoy extends Command {
       drive.tankDrive(leftPow, rightPow);
     }
 
-    if (drive.getCurrent() < Constants.LOW_AUTOSHIFT) {
-      drive.shiftUp();
-    } else if (drive.getCurrent() > Constants.HIGH_AUTOSHIFT) {
-      drive.shiftDown();
-    }
+    // if (leftPow == 0 && rightPow == 0) {
+    //   drive.shiftDown();
+    // } else if (drive.getCurrent() < Constants.LOW_AUTOSHIFT) {
+    //   drive.shiftUp();
+    // } else if (drive.getCurrent() > Constants.HIGH_AUTOSHIFT) {
+    //   drive.shiftDown();
+    // }
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
     lastAng = drive.getAngle();
+    lastPow_drive = OI.getInstance().getY_Left();
+    lastPow_turn = OI.getInstance().getX_Right();
   }
 
   // Make this return true when this Command no longer needs to run execute()

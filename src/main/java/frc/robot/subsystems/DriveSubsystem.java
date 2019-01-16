@@ -119,7 +119,7 @@ private class DriveSide {
     } 
 
     public double getCurrent() {
-      return (master.getOutputCurrent() + slave.getOutputCurrent()) / 2;
+      return master.getOutputCurrent();
     }
   }
 }
