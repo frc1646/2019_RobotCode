@@ -18,26 +18,48 @@ public class CameraSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   NetworkTable ballVisionContour;
-  double[] defaultArray = {0.0};
+  
 
   private static CameraSubsystem instance;
-  
+  double cameraWidth = 158;
+  double[] defaultArray = {cameraWidth/2};
+
+  public boolean foundBall;
+
   
 
   public CameraSubsystem() {
     ballVisionContour = NetworkTable.getTable("GRIP/orangeBall");
-
+    foundBall = false;
 
   }
 
-  public double getX() {
+  public boolean isBallFound(){
+    return foundBall;
+  }
+
+  
+
+  public double getRawX() {
     double[] ballX = ballVisionContour.getNumberArray("centerX", defaultArray);
     if (ballX.length == 0){
+      foundBall =  false;
       return defaultArray[0];
+    }
+    else if (ballX.length != 0){
+      foundBall = true;
     }
     return ballX[0];
   }
 
+  public double getX() {
+    return getRawX() - (cameraWidth/2);
+
+  }
+
+  public double getWidth() {
+    return cameraWidth;
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
