@@ -24,6 +24,10 @@ public class RobotMap {
   /* OI */
   public static final int DRIVER_CONTROLLER_PORT = 0;
 
+  /* DriveSide */
+  public static final boolean ENCODER_INV_1 = false;
+  public static final boolean ENCODER_INV_2 = false;
+
   /* DriveSubsystem */
   public static final int FRONT_LEFT = 2;
   public static final int BACK_LEFT = 1;
@@ -35,11 +39,16 @@ public class RobotMap {
   public static final boolean INV_3 = true;
   public static final boolean INV_4 = true;
 
+  public static final int LEFT_ENCODER_A = 9;
+  public static final int LEFT_ENCODER_B = 8;
+  public static final int RIGHT_ENCODER_A = 0;
+  public static final int RIGHT_ENCODER_B = 1;
 
   /* PneumaticSubsystem */
   public static final int SHIFTER_PORT_A = 0;
   public static final int SHIFTER_PORT_B = 1;
 
+  
 
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.

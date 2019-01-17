@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
 
     //initialize camera server
     CameraServer.getInstance().startAutomaticCapture();
+    DriveSubsystem.getInstance().resetEncoder();
   }
 
   /**

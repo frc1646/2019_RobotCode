@@ -18,27 +18,31 @@ public class CameraSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   NetworkTable ballVisionContour;
+  NetworkTable bayVisionContour;
   
-
   private static CameraSubsystem instance;
   double cameraWidth = 158;
   double[] defaultArray = {cameraWidth/2};
 
   public boolean foundBall;
-
+  public boolean foundBay;
   
 
   public CameraSubsystem() {
     ballVisionContour = NetworkTable.getTable("GRIP/orangeBall");
     foundBall = false;
-
+  
+    bayVisionContour = NetworkTable.getTable("GRIP/bayHatch");
+    foundBay = false;
   }
 
   public boolean isBallFound(){
     return foundBall;
   }
 
-  
+  public boolean isBayFound() {
+    return foundBay;
+  }
 
   public double getRawX() {
     double[] ballX = ballVisionContour.getNumberArray("centerX", defaultArray);
@@ -52,9 +56,23 @@ public class CameraSubsystem extends Subsystem {
     return ballX[0];
   }
 
+  public double getBayRawX() {
+    double[] bayX = bayVisionContour.getNumberArray("centerX", defaultArray);
+    if (bayX.length == 0) {
+      foundBay = false;
+      return defaultArray[0];
+    } else if (bayX.length != 0) {
+      foundBay = true;
+    }
+    return bayX[0];
+  }
+
   public double getX() {
     return getRawX() - (cameraWidth/2);
+  }
 
+  public double getBayCenter() {
+    return getBayRawX() - (cameraWidth / 2);
   }
 
   public double getWidth() {

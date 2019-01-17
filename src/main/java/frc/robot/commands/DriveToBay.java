@@ -8,21 +8,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class DriveToBall extends Command {
-  
-  DriveSubsystem drive;
-  CameraSubsystem camera;
+public class DriveToBay extends Command {
 
+  private DriveSubsystem drive;
+  private CameraSubsystem camera;
 
-
-
-
-  public DriveToBall() {
+  public DriveToBay() {
     requires(drive = DriveSubsystem.getInstance());
     requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
@@ -36,31 +30,8 @@ public class DriveToBall extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-
   protected void execute() {
-    double x = camera.getX();
-    System.out.println(x);
-    if (camera.isBallFound()){
-      
-      drive.arcadeDrive(1.0 , x/(camera.getWidth()));
-    
-    } else {
-      double leftPow = OI.getInstance().getY_Left();
-      double rightPow = OI.getInstance().getX_Right();
-
-      SmartDashboard.putNumber("leftPow", leftPow);
-      SmartDashboard.putNumber("rightPow", rightPow);
-    
-      if (leftPow < 0.05 && leftPow > -0.05) {
-       leftPow = 0;
-      } 
-      if (rightPow < 0.05 && rightPow > -0.05) {
-       rightPow = 0;
-      }
-      drive.tankDrive(leftPow, rightPow);
-      }
   }
-   
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

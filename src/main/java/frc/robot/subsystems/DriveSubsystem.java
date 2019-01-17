@@ -12,9 +12,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveWithJoy;
@@ -31,11 +33,18 @@ public class DriveSubsystem extends Subsystem {
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
+  
 
  	private DriveSubsystem() { 
  		gyro = new ADXRS450_Gyro(); 
- 		leftSide = new DriveSide(RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.INV_1, RobotMap.INV_2); 
- 		rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT, RobotMap.INV_3, RobotMap.INV_4); 
+    leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
+                              RobotMap.INV_1, RobotMap.INV_2, 
+                              RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
+                              RobotMap.ENCODER_INV_1); 
+    rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
+                              RobotMap.INV_3, RobotMap.INV_4,
+                              RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
+                              RobotMap.ENCODER_INV_2); 
     shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
   } 
  	 
@@ -43,7 +52,11 @@ public class DriveSubsystem extends Subsystem {
  		leftSide.setPower(leftPower); 
  		rightSide.setPower(rightPower); 
  	} 
- 
+   
+  public void resetEncoder() {
+    leftSide.resetEncoder();
+    rightSide.resetEncoder();
+  }
  
  	public double getAngle() { 
  		return gyro.getAngle(); 
@@ -54,17 +67,13 @@ public class DriveSubsystem extends Subsystem {
    } 
    
   public double getDistance() {
-    return 0;
+    return (leftSide.getDistance() + rightSide.getDistance()) / 2;
   }
  	 
  	public void calibrateGyro() { 
  		gyro.calibrate(); 
  	}
   
-  public double getCurrent() {
-    return (Math.abs(leftSide.getCurrent()) + Math.abs(rightSide.getCurrent())) / 2;
-  }
-
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy()); 
   } 
@@ -102,24 +111,38 @@ public void shiftOff() {
 
 
 private class DriveSide { 
-    private TalonSRX master, slave;
-   //private Encoder encoder; 
+    private TalonSRX master, slave;  
+    private Encoder encoder; 
 
-    public DriveSide(int port1, int port2, boolean inv1, boolean inv2) { 
+    public DriveSide(int port1, int port2, 
+                     boolean inv1, boolean inv2, 
+                     int encoder_A, int encoder_B,
+                     boolean encoder_inv) {     
       master = new TalonSRX(port1); 
       slave = new TalonSRX(port2); 
      		 
       master.setInverted(inv1); 
       slave.setInverted(inv2); 
+
+      encoder = new Encoder(encoder_A, encoder_B);
+      encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
     } 
      	 
     public void setPower(double power) { 
       master.set(ControlMode.PercentOutput, power);
       slave.set(ControlMode.PercentOutput, power);
-    } 
+    }
 
-    public double getCurrent() {
-      return (master.getOutputCurrent() + slave.getOutputCurrent()) / 2;
+    public double getEncoderCount() {
+      return encoder.getRaw();
+    }
+
+    public void resetEncoder() {
+      encoder.reset();
+    }
+
+    public double getDistance() {
+      return encoder.getDistance();
     }
   }
 }
