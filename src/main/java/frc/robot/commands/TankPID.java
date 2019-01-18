@@ -16,23 +16,25 @@ import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.CheesyPID;
 
-public class DrivePID extends Command {
+public class TankPID extends Command {
 
   private DriveSubsystem drive; 
-  private CheesyPID d_pid; // translational pid 
-  private CheesyPID a_pid;
-  private double lastTime;
+  private CheesyPID left_pid; // translational pid 
+  private CheesyPID right_pid;
   private double lastPos;
-  private double lastAng;
-  public DrivePID() {
+  private double lastLeft;
+  private double lastRight;
+  private double lastTime;
+  
+  public TankPID() {
     requires(drive = DriveSubsystem.getInstance());
-    d_pid = new CheesyPID(Constants.DRIVE_VEL_P,
-                          Constants.DRIVE_VEL_I,
-                          Constants.DRIVE_VEL_D);
+    left_pid = new CheesyPID(Constants.TANK_LEFT_VEL_P,
+                          Constants.TANK_LEFT_VEL_I,
+                          Constants.TANK_LEFT_VEL_D);
 
-    a_pid = new CheesyPID(Constants.ANGLE_VEL_P,
-                          Constants.ANGLE_VEL_I,
-                          Constants.ANGLE_VEL_D);
+    right_pid = new CheesyPID(Constants.TANK_RIGHT_VEL_P,
+                          Constants.TANK_RIGHT_VEL_I,
+                          Constants.TANK_RIGHT_VEL_D);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -40,8 +42,8 @@ public class DrivePID extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    d_pid.reset();
-    a_pid.reset();
+    left_pid.reset();
+    right_pid.reset();
 
     lastPos = drive.getDistance();
     //lastAng = drive.getAngle();
@@ -51,22 +53,35 @@ public class DrivePID extends Command {
   @Override
   protected void execute() {
     double dt = Timer.getFPGATimestamp() - lastTime;
-    double d_vel = (drive.getDistance() - lastPos) / dt; 
+    double d_vel = (drive.getDistance() - lastPos) / dt;
+    double leftVel = (drive.getDistanceLeftSide() - lastLeft) / dt;
+    double rightVel = (drive.getDistanceRightSide() - lastRight) / dt; 
     //double a_vel = (drive.getAngle() - lastAng) / dt;
 
     SmartDashboard.putNumber("d_vel", d_vel);
-    //SmartDashboard.putNumber("a_vel", a_vel);
+    SmartDashboard.putNumber("leftVel", leftVel);
+    SmartDashboard.putNumber("rightVel", rightVel);
 
-    double driveJoy = OI.getInstance().getY_Left();
-    double angleJoy = OI.getInstance().getX_Right();    
+    double leftJoy = OI.getInstance().getY_Left();
+    double rightJoy = OI.getInstance().getY_Right();    
 
-    d_pid.setSetpoint(driveJoy * Constants.DRIVE_MAX_VEL);
-    a_pid.setSetpoint(angleJoy * Constants.ANGLE_MAX_VEL);
+    if (leftJoy < 0.05 && leftJoy > -0.05) {
+      leftJoy = 0;  
+    } 
+    if (rightJoy < 0.05 && rightJoy > -0.05) {
+      rightJoy = 0;
+    }
 
-    drive.arcadeDrive(d_pid.calculate(d_vel, dt), 0);
+    left_pid.setSetpoint(leftJoy * Constants.DRIVE_MAX_VEL);
+    right_pid.setSetpoint(rightJoy * Constants.DRIVE_MAX_VEL);
+
+
+    drive.tankDrive(left_pid.calculate(leftVel, dt), right_pid.calculate(rightVel, dt));
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
+    lastLeft = drive.getDistanceLeftSide();
+    lastRight = drive.getDistanceRightSide();
     //lastAng = drive.getAngle();
   }
 

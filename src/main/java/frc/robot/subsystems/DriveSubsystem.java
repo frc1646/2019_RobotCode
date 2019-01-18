@@ -20,6 +20,7 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveWithJoy;
+import frc.robot.commands.TankPID;
 
 
 /**
@@ -36,7 +37,7 @@ public class DriveSubsystem extends Subsystem {
   
 
  	private DriveSubsystem() { 
- 		gyro = new ADXRS450_Gyro(); 
+ 		gyro = new ADXRS450_Gyro();
     leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
                               RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
@@ -58,24 +59,32 @@ public class DriveSubsystem extends Subsystem {
     rightSide.resetEncoder();
   }
  
- 	public double getAngle() { 
- 		return gyro.getAngle(); 
- 	} 
+ 	 public double getAngle() {
+ 	 	return gyro.getAngle(); 
+ 	 } 
  	 
  	public void resetGyro() { 
- 		gyro.reset(); 
-   } 
+ 	 gyro.reset(); 
+  } 
    
+  public double getDistanceLeftSide() {
+    return leftSide.getDistance();
+  }
+
+  public double getDistanceRightSide() {
+    return rightSide.getDistance();
+  }
+
   public double getDistance() {
-    return (leftSide.getDistance() + rightSide.getDistance()) / 2;
+    return (getDistanceLeftSide() + getDistanceRightSide()) / 2;
   }
  	 
  	public void calibrateGyro() { 
- 		gyro.calibrate(); 
+ 	  gyro.calibrate(); 
  	}
   
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveWithJoy()); 
+    setDefaultCommand(new TankPID()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {

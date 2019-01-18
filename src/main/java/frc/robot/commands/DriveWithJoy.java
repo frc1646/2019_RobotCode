@@ -28,9 +28,11 @@ import frc.robot.subsystems.PneumaticSubsystem;
 public class DriveWithJoy extends Command {
   private DriveSubsystem drive;
   private double lastPos;
+  private double lastLeft;
+  private double lastRight;
   private double lastAng;
   private double lastTime;
-  
+  private double gyroAngle;
 
   public DriveWithJoy() {
     requires(drive = DriveSubsystem.getInstance());
@@ -48,15 +50,18 @@ public class DriveWithJoy extends Command {
   protected void execute() {
     double dt = Timer.getFPGATimestamp() - lastTime;
     double d_vel = (drive.getDistance() - lastPos) / dt; 
+    double leftVel = (drive.getDistanceLeftSide() - lastLeft) / dt;
+    double rightVel = (drive.getDistanceRightSide() - lastRight) / dt;
     double a_vel = (drive.getAngle() - lastAng) / dt;
-
+    double gyroAngle = drive.getAngle();
+    
 
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
-
     SmartDashboard.putNumber("Avg Encoder Distance", drive.getDistance());
-    SmartDashboard.putNumber("d_vel", d_vel);
-    SmartDashboard.putNumber("gyro angle", drive.getAngle());
+    SmartDashboard.putNumber("gyro angle", gyroAngle);
+    SmartDashboard.putNumber("leftVel", leftVel);
+    SmartDashboard.putNumber("rightVel", rightVel);
 
     double leftPow = OI.getInstance().getY_Left();
     double rightPow = OI.getInstance().getX_Right();
@@ -65,18 +70,17 @@ public class DriveWithJoy extends Command {
     SmartDashboard.putNumber("rightPow", rightPow);
     
     if (leftPow < 0.05 && leftPow > -0.05) {
-      leftPow = 0;
-      
+      leftPow = 0;  
     } 
     if (rightPow < 0.05 && rightPow > -0.05) {
       rightPow = 0;
     }
 
-    if (d_vel >= 4 || d_vel <= -4) {
-      drive.shiftUp();
-    } else if (d_vel < 3 && d_vel > -3) {
-      drive.shiftDown();
-    }
+    // if (d_vel >= 4 || d_vel <= -4) {
+    //   drive.shiftUp();
+    // } else if (d_vel < 3 && d_vel > -3) {
+    //   drive.shiftDown();
+    // }
 
     if (RobotMap.driveMode == DriveMode.ARCADE) {
       drive.arcadeDrive(leftPow, rightPow);  
@@ -87,6 +91,8 @@ public class DriveWithJoy extends Command {
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
     lastAng = drive.getAngle();
+    lastLeft = drive.getDistanceLeftSide();
+    lastRight = drive.getDistanceRightSide();
   }
 
   // Make this return true when this Command no longer needs to run execute()
