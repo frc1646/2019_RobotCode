@@ -73,11 +73,11 @@ public class DriveWithJoy extends Command {
       rightPow = 0;
     }
 
-    if (d_vel >= 4 || d_vel <= -4) {
-      drive.shiftUp();
-    } else if (d_vel < 3 && d_vel > -3) {
-      drive.shiftDown();
-    }
+    // if (d_vel >= 4 || d_vel <= -4) {
+    //   drive.shiftUp();
+    // } else if (d_vel < 3 && d_vel > -3) {
+    //   drive.shiftDown();
+    // }
 
     if (RobotMap.driveMode == DriveMode.ARCADE) {
       drive.arcadeDrive(leftPow, rightPow);  

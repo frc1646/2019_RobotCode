@@ -48,6 +48,11 @@ public class RobotMap {
   public static final int SHIFTER_PORT_A = 0;
   public static final int SHIFTER_PORT_B = 1;
 
+
+  //CargoMechanismSubsystem
+  public static final int LEFT_CARGO_ARM_MOTOR_ID =  -1;
+  public static final int RIGHT_CARGO_ARM_MOTOR_ID = -1;
+  public static final int INTAKE_MOTOR_ID = -1;
   
 
   // For example to map the left and right motors, you could define the
