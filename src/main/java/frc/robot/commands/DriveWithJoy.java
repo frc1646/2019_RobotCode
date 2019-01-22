@@ -43,7 +43,11 @@ public class DriveWithJoy extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+<<<<<<< HEAD
     lastShift = Timer.getFPGATimestamp();
+=======
+     lastShift = Timer.getFPGATimestamp();
+>>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -54,7 +58,11 @@ public class DriveWithJoy extends Command {
     double leftVel = (drive.getDistanceLeftSide() - lastLeft) / dt;
     double rightVel = (drive.getDistanceRightSide() - lastRight) / dt;
     double a_vel = (drive.getAngle() - lastAng) / dt;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("Avg Encoder Distance", drive.getDistance());
@@ -94,6 +102,16 @@ public class DriveWithJoy extends Command {
     } else if (RobotMap.driveMode == DriveMode.TANK) {
       drive.tankDrive(leftPow, rightPow);
     }
+
+    if ((Timer.getFPGATimestamp() - lastShift) > 0.05) {
+      if (d_vel > (0.2 * Constants.DRIVE_MAX_VEL)) {
+        drive.shiftUp();
+      } else if (d_vel < 0.3 * Constants.DRIVE_MAX_VEL) {
+        //drive.shiftDown();
+        System.out.println("Shift Down");
+      }
+    }
+
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();

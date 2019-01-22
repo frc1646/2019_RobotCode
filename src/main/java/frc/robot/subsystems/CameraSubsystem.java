@@ -61,10 +61,15 @@ public class CameraSubsystem extends Subsystem {
     if (bayX.length == 0) {
       foundBay = false;
       return defaultArray[0];
-    } else if (bayX.length != 0) {
+    } else if (bayX.length == 1) {
+      foundBay = true;
+      return bayX[0];
+
+    } else {
       foundBay = true;
     }
-    return bayX[0];
+
+    return (bayX[0] + bayX[1]) / 2.0;
   }
 
   public double getX() {

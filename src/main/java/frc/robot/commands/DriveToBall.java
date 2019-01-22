@@ -57,7 +57,7 @@ public class DriveToBall extends Command {
       if (rightPow < 0.05 && rightPow > -0.05) {
        rightPow = 0;
       }
-      drive.tankDrive(leftPow, rightPow);
+      drive.arcadeDrive(leftPow, rightPow);
       }
   }
    
