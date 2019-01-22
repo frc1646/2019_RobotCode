@@ -16,7 +16,7 @@ public class Constants {
     //shift high much early than it already is
     //do not shift when there is no joystick input
     public static final double DRIVE_MAX_VEL = 11.5;
-    public static final double ANGLE_MAX_VEL = 0;
+    public static final double ANGLE_MAX_VEL = 340;
 
     public static final double LOW_AUTOSHIFT = 7;
     public static final double HIGH_AUTOSHIFT = 25;
