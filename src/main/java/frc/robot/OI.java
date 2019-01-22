@@ -24,12 +24,8 @@ public class OI {
 
   private static OI instance;
   private Joystick driver_controller;
-<<<<<<< HEAD
   private JoystickButton yButton, aButton, startButton, xButton;
   private JoystickButton right_bumper;
-=======
-  private JoystickButton yButton, aButton, startButton, bButton;
->>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
 
   private OI() {
     driver_controller = new Joystick(RobotMap.DRIVER_CONTROLLER_PORT);
@@ -37,22 +33,14 @@ public class OI {
     yButton = new JoystickButton(driver_controller, 4);
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
-<<<<<<< HEAD
     xButton = new JoystickButton(driver_controller, 2);
     right_bumper = new JoystickButton(driver_controller, 6);
-=======
-    bButton = new JoystickButton(driver_controller, 2);
->>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
 
     yButton.whenPressed(new ShiftUp());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
-<<<<<<< HEAD
     xButton.whileHeld(new DriveToBall());
     right_bumper.whenPressed(new ToggleShift());
-=======
-    bButton.whileHeld(new DriveToBall());
->>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
   }
 
   public double getY_Left() {
