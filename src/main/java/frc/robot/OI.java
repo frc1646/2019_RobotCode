@@ -13,6 +13,7 @@ import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
+import frc.robot.commands.ToggleShift;
 
 
 /**
@@ -24,6 +25,7 @@ public class OI {
   private static OI instance;
   private Joystick driver_controller;
   private JoystickButton yButton, aButton, startButton, xButton;
+  private JoystickButton right_bumper;
 
   private OI() {
     driver_controller = new Joystick(RobotMap.DRIVER_CONTROLLER_PORT);
@@ -32,11 +34,13 @@ public class OI {
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
     xButton = new JoystickButton(driver_controller, 2);
+    right_bumper = new JoystickButton(driver_controller, 6);
 
     yButton.whenPressed(new ShiftUp());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
     xButton.whileHeld(new DriveToBall());
+    right_bumper.whenPressed(new ToggleShift());
   }
 
   public double getY_Left() {

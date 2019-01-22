@@ -24,6 +24,7 @@ public class DrivePID extends Command {
   private double lastTime;
   private double lastPos;
   private double lastAng;
+
   public DrivePID() {
     requires(drive = DriveSubsystem.getInstance());
     d_pid = new CheesyPID(Constants.DRIVE_VEL_P,
@@ -44,30 +45,46 @@ public class DrivePID extends Command {
     a_pid.reset();
 
     lastPos = drive.getDistance();
-    //lastAng = drive.getAngle();
+    lastAng = drive.getAngle();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double a_vel = 0;
     double dt = Timer.getFPGATimestamp() - lastTime;
-    double d_vel = (drive.getDistance() - lastPos) / dt; 
-    //double a_vel = (drive.getAngle() - lastAng) / dt;
+    if (Math.abs(drive.getAngle() - lastAng) > 0.1) {
+      a_vel = (drive.getAngle() - lastAng) / dt;
+    }
+    double d_vel = (drive.getDistance() - lastPos) / dt;    
+    
 
     SmartDashboard.putNumber("d_vel", d_vel);
-    //SmartDashboard.putNumber("a_vel", a_vel);
+    SmartDashboard.putNumber("a_vel", a_vel);
+    SmartDashboard.putNumber("gyro angle", drive.getAngle());
 
-    double driveJoy = OI.getInstance().getY_Left();
-    double angleJoy = OI.getInstance().getX_Right();    
+    double driveJoy = -OI.getInstance().getY_Left();
+    double angleJoy = OI.getInstance().getX_Right(); 
+
+    if (driveJoy < 0.05 && driveJoy > -0.05) {
+      driveJoy = 0;  
+    } 
+    if (angleJoy < 0.05 && angleJoy > -0.05) {
+      angleJoy = 0;
+    }
 
     d_pid.setSetpoint(driveJoy * Constants.DRIVE_MAX_VEL);
     a_pid.setSetpoint(angleJoy * Constants.ANGLE_MAX_VEL);
+  
+    //d_pid.setSetpoint(0);
+    //a_pid.setSetpoint(0);
+  
 
-    drive.arcadeDrive(d_pid.calculate(d_vel, dt), 0);
+    drive.arcadeDrive(d_pid.calculate(d_vel, dt), a_pid.calculate(a_vel, dt));
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
-    //lastAng = drive.getAngle();
+    lastAng = drive.getAngle();
   }
 
   // Make this return true when this Command no longer needs to run execute()

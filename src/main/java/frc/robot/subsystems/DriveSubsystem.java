@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
+import frc.robot.commands.DrivePID;
 import frc.robot.commands.DriveWithJoy;
 import frc.robot.commands.TankPID;
 
@@ -34,10 +35,15 @@ public class DriveSubsystem extends Subsystem {
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
+
+  private boolean highGear;
   
 
  	private DriveSubsystem() { 
- 		gyro = new ADXRS450_Gyro();
+     gyro = new ADXRS450_Gyro();
+     gyro.calibrate();
+     gyro.reset();
+
     leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
                               RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
@@ -47,6 +53,9 @@ public class DriveSubsystem extends Subsystem {
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
     shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
+
+    highGear = false;
+    shiftDown();
   } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
@@ -84,7 +93,7 @@ public class DriveSubsystem extends Subsystem {
  	}
   
   public void initDefaultCommand() {
-    setDefaultCommand(new TankPID()); 
+    setDefaultCommand(new DriveWithJoy()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
@@ -108,10 +117,16 @@ public static DriveSubsystem getInstance() {
 
 public void shiftUp() {
   shifter.set(Value.kForward);
+  highGear = true;
 }
 
 public void shiftDown() {
   shifter.set(Value.kReverse);
+  highGear = false;
+}
+
+public boolean isHighGear() {
+  return highGear;
 }
 
 public void shiftOff() {

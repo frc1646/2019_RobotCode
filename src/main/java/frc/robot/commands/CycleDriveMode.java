@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.RobotMap;
 
 public class CycleDriveMode extends Command {
   public CycleDriveMode() {
@@ -18,6 +19,11 @@ public class CycleDriveMode extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    int mode = RobotMap.driveMode.ordinal() + 1;
+    if (mode >= RobotMap.DriveMode.values().length) {
+      mode -= RobotMap.DriveMode.values().length;
+    }
+    RobotMap.driveMode = RobotMap.DriveMode.values()[mode];
   }
 
   // Called repeatedly when this Command is scheduled to run
