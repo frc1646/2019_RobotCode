@@ -15,13 +15,8 @@ public class Constants {
     public static final double FEET_PER_COUNT = Math.PI / 1024;
     //shift high much early than it already is
     //do not shift when there is no joystick input
-<<<<<<< HEAD
     public static final double DRIVE_MAX_VEL = 11.5; // feet per second
     public static final double ANGLE_MAX_VEL = 340; // degrees per second
-=======
-    public static final double DRIVE_MAX_VEL = 11.5;
-    public static final double ANGLE_MAX_VEL = 340;
->>>>>>> 93fbbcf51a76e2308a31d48b1c992f6ac4acfa3b
 
     public static final double LOW_AUTOSHIFT = 7;
     public static final double HIGH_AUTOSHIFT = 25;
