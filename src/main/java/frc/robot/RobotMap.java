@@ -23,6 +23,7 @@ public class RobotMap {
 
   /* OI */
   public static final int DRIVER_CONTROLLER_PORT = 0;
+  public static final int OPERATOR_CONTROLLER_PORT = 1;
 
   /* DriveSide */
   public static final boolean ENCODER_INV_1 = false;
@@ -34,10 +35,10 @@ public class RobotMap {
   public static final int FRONT_RIGHT = 3;
   public static final int BACK_RIGHT = 4;   
 
-  public static final boolean INV_1 = false;
-  public static final boolean INV_2 = false;
-  public static final boolean INV_3 = true;
-  public static final boolean INV_4 = true;
+  public static final boolean INV_1 = true;
+  public static final boolean INV_2 = true;
+  public static final boolean INV_3 = false;
+  public static final boolean INV_4 = false;
 
   public static final int LEFT_ENCODER_A = 9;
   public static final int LEFT_ENCODER_B = 8;

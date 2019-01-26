@@ -60,16 +60,22 @@ public class CameraSubsystem extends Subsystem {
     double[] bayX = bayVisionContour.getNumberArray("centerX", defaultArray);
     if (bayX.length == 0) {
       foundBay = false;
+      System.out.println("not found");
       return defaultArray[0];
     } else if (bayX.length == 1) {
       foundBay = true;
+      System.out.println("found");
       return bayX[0];
-
     } else {
+      System.out.println("found else");
       foundBay = true;
     }
 
-    return (bayX[0] + bayX[1]) / 2.0;
+    if (bayX[0] > bayX[1]) {
+      return bayX[0];
+    } else {
+      return bayX[1];
+    }
   }
 
   public double getX() {
@@ -93,7 +99,11 @@ public static CameraSubsystem getInstance() {
 	if (instance == null){
     instance = new CameraSubsystem();
   
-  }
-  return instance;
+    }
+    return instance;
+    } 
 }
-}
+//public double foundBay() {
+//	return ;
+//}
+//}

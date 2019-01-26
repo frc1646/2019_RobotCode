@@ -16,7 +16,7 @@ import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.CheesyPID;
 
-public class TankPID extends Command {
+public class TankPIDTest extends Command {
 
   private DriveSubsystem drive; 
   private CheesyPID left_pid; // translational pid 
@@ -25,8 +25,9 @@ public class TankPID extends Command {
   private double lastLeft;
   private double lastRight;
   private double lastTime;
+  private double manual_speed;
   
-  public TankPID() {
+  public TankPIDTest(double speed) {
     requires(drive = DriveSubsystem.getInstance());
     left_pid = new CheesyPID(Constants.TANK_LEFT_VEL_P,
                           Constants.TANK_LEFT_VEL_I,
@@ -39,6 +40,7 @@ public class TankPID extends Command {
                           Constants.TANK_RIGHT_KF);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    this.manual_speed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -64,21 +66,21 @@ public class TankPID extends Command {
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
 
-    double leftJoy = -OI.getInstance().getY_Left();
-    double rightJoy = -OI.getInstance().getY_Right();    
+    // //double leftJoy = -OI.getInstance().getY_Left();
+    // //double rightJoy = -OI.getInstance().getY_Right();    
 
-    if (leftJoy < 0.05 && leftJoy > -0.05) {
-      leftJoy = 0;  
-    } 
-    if (rightJoy < 0.05 && rightJoy > -0.05) {
-      rightJoy = 0;
-    }
+    // //if (leftJoy < 0.05 && leftJoy > -0.05) {
+    //   leftJoy = 0;  
+    // } 
+    // if (rightJoy < 0.05 && rightJoy > -0.05) {
+    //   rightJoy = 0;
+    // }
 
-    left_pid.setSetpoint(leftJoy * Constants.DRIVE_MAX_VEL);
-    right_pid.setSetpoint(rightJoy * Constants.DRIVE_MAX_VEL);
+    left_pid.setSetpoint(manual_speed * Constants.DRIVE_MAX_VEL);
+    right_pid.setSetpoint(manual_speed * Constants.DRIVE_MAX_VEL);
 
 
-    drive.tankDrive(left_pid.calculate(leftVel, dt), right_pid.calculate(rightVel, dt));
+    drive.tankDrive(left_pid.calculate(manual_speed, dt), right_pid.calculate(manual_speed, dt));
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();

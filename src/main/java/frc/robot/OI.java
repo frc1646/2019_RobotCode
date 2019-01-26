@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
+import frc.robot.commands.DriveToHatchTarget;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
+import frc.robot.commands.TankPIDTest;
 import frc.robot.commands.ToggleShift;
 
 
@@ -23,24 +25,38 @@ import frc.robot.commands.ToggleShift;
 public class OI {
 
   private static OI instance;
-  private Joystick driver_controller;
-  private JoystickButton yButton, aButton, startButton, xButton;
+  private Joystick driver_controller, operator_controller;
+  private JoystickButton yButton, aButton, startButton, xButton, bButton;
+  private JoystickButton yOpButton, aOpButton, xOpButton, bOpButton;
   private JoystickButton right_bumper;
 
   private OI() {
     driver_controller = new Joystick(RobotMap.DRIVER_CONTROLLER_PORT);
+    operator_controller = new Joystick(RobotMap.OPERATOR_CONTROLLER_PORT);
 
     yButton = new JoystickButton(driver_controller, 4);
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
-    xButton = new JoystickButton(driver_controller, 2);
-    right_bumper = new JoystickButton(driver_controller, 6);
+    xButton = new JoystickButton(driver_controller, 3);
+    //right_bumper = new JoystickButton(driver_controller, 6);
+    bButton = new JoystickButton(driver_controller, 2);
+
+    yOpButton = new JoystickButton(operator_controller, 4);
+    aOpButton = new JoystickButton(operator_controller, 1);
+    xOpButton = new JoystickButton(operator_controller, 3);
+    bOpButton = new JoystickButton(operator_controller, 2);
 
     yButton.whenPressed(new ShiftUp());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
-    xButton.whileHeld(new DriveToBall());
-    right_bumper.whenPressed(new ToggleShift());
+    bButton.whileHeld(new DriveToBall());
+    //right_bumper.whenPressed(new ToggleShift());
+    xButton.whileHeld(new DriveToHatchTarget());
+  
+    yOpButton.whileHeld(new TankPIDTest(0.2));
+    aOpButton.whileHeld(new TankPIDTest(0.4));
+    bOpButton.whileHeld(new TankPIDTest(0.6));
+    xOpButton.whileHeld(new TankPIDTest(1.0));
   }
 
   public double getY_Left() {
@@ -61,6 +77,8 @@ public class OI {
     }
     return instance;
   }
+
+
 
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

@@ -44,18 +44,15 @@ public class DriveSubsystem extends Subsystem {
      gyro.calibrate();
      gyro.reset();
 
-    leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
+    rightSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
                               RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
                               RobotMap.ENCODER_INV_1); 
-    rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
+    leftSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
                               RobotMap.INV_3, RobotMap.INV_4,
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
     shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
-
-    highGear = false;
-    shiftDown();
   } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
@@ -93,7 +90,7 @@ public class DriveSubsystem extends Subsystem {
  	}
   
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveWithJoy()); 
+    setDefaultCommand(new TankPID()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
@@ -103,8 +100,8 @@ public void tankDrive(double leftPow, double rightPow) {
   setSidePower(leftPow, rightPow);
 }  
 
-public void arcadeDrive(double drive, double turn) {
-  setSidePower(drive - turn, drive + turn);
+public void arcadeDrive(double leftPow, double rightPow) {
+  setSidePower(leftPow - rightPow, leftPow + rightPow);
 }
 
 public static DriveSubsystem getInstance() { 

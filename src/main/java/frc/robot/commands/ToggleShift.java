@@ -14,9 +14,9 @@ public class ToggleShift extends Command {
     @Override
     protected void initialize() {
         if (drive.isHighGear()) {
-            drive.shiftDown();
-        } else {
-            drive.shiftUp();
+             drive.shiftDown();
+         } else {
+             drive.shiftUp();
         }
     }
 
