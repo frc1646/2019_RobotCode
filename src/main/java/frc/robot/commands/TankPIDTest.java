@@ -40,7 +40,7 @@ public class TankPIDTest extends Command {
                           Constants.TANK_RIGHT_KF);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    this.manual_speed = speed;
+    this.manual_speed = -speed;
   }
 
   // Called just before this Command runs the first time

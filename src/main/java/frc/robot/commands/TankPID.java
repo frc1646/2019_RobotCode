@@ -64,8 +64,8 @@ public class TankPID extends Command {
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
 
-    double leftJoy = -OI.getInstance().getY_Left();
-    double rightJoy = -OI.getInstance().getY_Right();    
+    double leftJoy = OI.getInstance().getY_Left();
+    double rightJoy = OI.getInstance().getY_Right();    
 
     if (leftJoy < 0.05 && leftJoy > -0.05) {
       leftJoy = 0;  
@@ -79,6 +79,7 @@ public class TankPID extends Command {
 
 
     drive.tankDrive(left_pid.calculate(leftVel, dt), right_pid.calculate(rightVel, dt));
+    //drive.tankDrive(left_pid.calculate(leftVel, dt), 0);
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();

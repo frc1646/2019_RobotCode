@@ -44,11 +44,11 @@ public class DriveSubsystem extends Subsystem {
      gyro.calibrate();
      gyro.reset();
 
-    rightSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
+    leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
                               RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
                               RobotMap.ENCODER_INV_1); 
-    leftSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
+    rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
                               RobotMap.INV_3, RobotMap.INV_4,
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
@@ -94,9 +94,6 @@ public class DriveSubsystem extends Subsystem {
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
-  leftPow = OI.getInstance().getY_Left();
-  rightPow = OI.getInstance().getY_Right();
-
   setSidePower(leftPow, rightPow);
 }  
 
