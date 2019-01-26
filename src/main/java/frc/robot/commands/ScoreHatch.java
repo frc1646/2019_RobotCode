@@ -39,6 +39,7 @@ public class ScoreHatch extends Command {
   @Override
   protected boolean isFinished() {
     return false;
+    //Might change this to true
   }
 
   // Called once after isFinished returns true
