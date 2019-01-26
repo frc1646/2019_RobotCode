@@ -35,7 +35,7 @@ public class DriveToHatchTarget extends Command {
     double x = camera.getBayCenter();
     System.out.println("Current center is: " + x);
     if (camera.isBayFound()){
-    drive.arcadeDrive(0.5, (camera.getBayCenter()/(camera.getWidth() * 2)));
+    drive.arcadeDrive(-0.5, (camera.getBayCenter()/(camera.getWidth() * 2)));
 
      } else {
     double leftPow = OI.getInstance().getY_Left();

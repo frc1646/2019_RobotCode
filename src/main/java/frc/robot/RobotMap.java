@@ -35,15 +35,15 @@ public class RobotMap {
   public static final int FRONT_RIGHT = 3;
   public static final int BACK_RIGHT = 4;   
 
-  public static final boolean INV_1 = true;
-  public static final boolean INV_2 = true;
-  public static final boolean INV_3 = false;
-  public static final boolean INV_4 = false;
+  public static final boolean INV_1 = false;
+  public static final boolean INV_2 = false;
+  public static final boolean INV_3 = true;
+  public static final boolean INV_4 = true;
 
-  public static final int LEFT_ENCODER_A = 9;
-  public static final int LEFT_ENCODER_B = 8;
-  public static final int RIGHT_ENCODER_A = 0;
-  public static final int RIGHT_ENCODER_B = 1;
+  public static final int LEFT_ENCODER_A = 1;
+  public static final int LEFT_ENCODER_B = 0;
+  public static final int RIGHT_ENCODER_A = 8;
+  public static final int RIGHT_ENCODER_B = 9;
 
   /* PneumaticSubsystem */
   public static final int SHIFTER_PORT_A = 0;

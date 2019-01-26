@@ -29,11 +29,11 @@ public class Constants {
     public static final double ANGLE_VEL_I = 0;
     public static final double ANGLE_VEL_D = -0.2;
 
-    public static final double TANK_LEFT_VEL_P = -29;
+    public static final double TANK_LEFT_VEL_P = 0.02;
     public static final double TANK_LEFT_VEL_I = 0;
     public static final double TANK_LEFT_VEL_D = 0;
 
-    public static final double TANK_RIGHT_VEL_P = -20;
+    public static final double TANK_RIGHT_VEL_P = 0;
     public static final double TANK_RIGHT_VEL_I = 0;
     public static final double TANK_RIGHT_VEL_D = 0;
 
