@@ -53,21 +53,18 @@ public class DriveWithJoy extends Command {
     double d_vel = (drive.getDistance() - lastPos) / dt; 
     double leftVel = (drive.getDistanceLeftSide() - lastLeft) / dt;
     double rightVel = (drive.getDistanceRightSide() - lastRight) / dt;
-    double a_vel = (drive.getAngle() - lastAng) / dt;
+    double a_vel = drive.getGyro().getRate();
+    double angle = drive.getGyro().getAngle();
     
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("Avg Encoder Distance", drive.getDistance());
-    SmartDashboard.putNumber("gyro angle", drive.getAngle());
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
-
+    SmartDashboard.putNumber("angle", angle);
     double leftPow = OI.getInstance().getY_Left();
     double rightPow = OI.getInstance().getX_Right();
 
-    SmartDashboard.putNumber("leftPow", leftPow);
-    SmartDashboard.putNumber("rightPow", rightPow);
-    
     if (leftPow < 0.05 && leftPow > -0.05) {
       leftPow = 0;  
     } 
@@ -75,33 +72,27 @@ public class DriveWithJoy extends Command {
       rightPow = 0;
     }
 
-    // if (d_vel >= 4 || d_vel <= -4) {
-    //   drive.shiftUp();
-    // } else if (d_vel < 3 && d_vel > -3) {
-    //   drive.shiftDown();
-    // }
-
     if (RobotMap.driveMode == DriveMode.ARCADE) {
       drive.arcadeDrive(leftPow, rightPow);  
     } else if (RobotMap.driveMode == DriveMode.TANK) {
       drive.tankDrive(leftPow, rightPow);
     }
 
-    if ((Timer.getFPGATimestamp() - lastShift) > 0.05) {
-      if (Math.abs(d_vel) > (0.25 * Constants.DRIVE_MAX_VEL)) {
-        drive.shiftUp();
-      } else if (Math.abs(d_vel) < 0.15 * Constants.DRIVE_MAX_VEL) {
-        drive.shiftDown();
-        //System.out.println("Shift Down");  theoretical speed = 14.88 ft/s real speed = 12
-      }
-      lastShift = Timer.getFPGATimestamp();
+    // if ((Timer.getFPGATimestamp() - lastShift) > 0.05) {
+    //   if (Math.abs(d_vel) > (0.25 * Constants.DRIVE_MAX_VEL)) {
+    //     drive.shiftUp();
+    //   } else if (Math.abs(d_vel) < 0.15 * Constants.DRIVE_MAX_VEL) {
+    //     drive.shiftDown();
+    //     //System.out.println("Shift Down");  theoretical speed = 14.88 ft/s real speed = 12
+    //   }
+    //   lastShift = Timer.getFPGATimestamp();
 
-    }
+    // }
 
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
-    lastAng = drive.getAngle();
+    lastAng = drive.getGyro().getAngle();
     lastLeft = drive.getDistanceLeftSide();
     lastRight = drive.getDistanceRightSide();
     

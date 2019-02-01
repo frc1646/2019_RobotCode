@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -56,7 +58,7 @@ public class Robot extends TimedRobot {
     //CameraServer.getInstance().startAutomaticCapture();
     CameraServer.getInstance().startAutomaticCapture();
     DriveSubsystem.getInstance().resetEncoder();
-    DriveSubsystem.getInstance().calibrateGyro();
+    DriveSubsystem.getInstance().resetGyro();
   }
 
   /**

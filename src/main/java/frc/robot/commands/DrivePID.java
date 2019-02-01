@@ -45,23 +45,19 @@ public class DrivePID extends Command {
     a_pid.reset();
 
     lastPos = drive.getDistance();
-    lastAng = drive.getAngle();
+    lastAng = drive.getGyro().getAngle();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double a_vel = 0;
+    double a_vel = drive.getGyro().getRate();
     double dt = Timer.getFPGATimestamp() - lastTime;
-    if (Math.abs(drive.getAngle() - lastAng) > 0.1) {
-      a_vel = (drive.getAngle() - lastAng) / dt;
-    }
     double d_vel = (drive.getDistance() - lastPos) / dt;    
-    
 
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
-    SmartDashboard.putNumber("gyro angle", drive.getAngle());
+    SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
 
     double driveJoy = -OI.getInstance().getY_Left();
     double angleJoy = OI.getInstance().getX_Right(); 
@@ -84,7 +80,7 @@ public class DrivePID extends Command {
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
-    lastAng = drive.getAngle();
+    lastAng = drive.getGyro().getAngle();
   }
 
   // Make this return true when this Command no longer needs to run execute()

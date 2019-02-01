@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
@@ -54,7 +55,8 @@ public class OI {
     yButton.whenPressed(new ShiftUp());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
-    bButton.whileHeld(new DriveToBall());
+    bButton.whenActive(new ResetGyro());
+    //bButton.whileHeld(new DriveToBall());
     //right_bumper.whenPressed(new ToggleShift());
     xButton.whileHeld(new DriveToHatchTarget());
     backButton.whileHeld(new TankPIDTest(0.2));

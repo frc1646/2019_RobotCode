@@ -9,10 +9,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,7 +34,7 @@ public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private ADXRS450_Gyro gyro;
+  private AHRS gyro;
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
@@ -40,9 +43,7 @@ public class DriveSubsystem extends Subsystem {
   
 
  	private DriveSubsystem() { 
-     gyro = new ADXRS450_Gyro();
-     gyro.calibrate();
-     gyro.reset();
+     gyro = new AHRS(SPI.Port.kMXP);
 
     leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
@@ -65,13 +66,15 @@ public class DriveSubsystem extends Subsystem {
     rightSide.resetEncoder();
   }
  
- 	 public double getAngle() {
- 	 	return gyro.getAngle(); 
- 	 } 
+  public AHRS getGyro() {
+    return gyro;
+  }
+
  	 
  	public void resetGyro() { 
  	 gyro.reset(); 
   } 
+
    
   public double getDistanceLeftSide() {
     return leftSide.getDistance();
@@ -84,13 +87,9 @@ public class DriveSubsystem extends Subsystem {
   public double getDistance() {
     return (getDistanceLeftSide() + getDistanceRightSide()) / 2;
   }
- 	 
- 	public void calibrateGyro() { 
- 	  gyro.calibrate(); 
- 	}
   
   public void initDefaultCommand() {
-    setDefaultCommand(new TankPID()); 
+    setDefaultCommand(new DriveWithJoy()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
