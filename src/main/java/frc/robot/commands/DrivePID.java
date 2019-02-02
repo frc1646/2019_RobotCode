@@ -29,11 +29,14 @@ public class DrivePID extends Command {
     requires(drive = DriveSubsystem.getInstance());
     d_pid = new CheesyPID(Constants.DRIVE_VEL_P,
                           Constants.DRIVE_VEL_I,
-                          Constants.DRIVE_VEL_D);
+                          Constants.DRIVE_VEL_D,
+                          Constants.DRIVE_VEL_F);
 
     a_pid = new CheesyPID(Constants.ANGLE_VEL_P,
                           Constants.ANGLE_VEL_I,
-                          Constants.ANGLE_VEL_D);
+                          Constants.ANGLE_VEL_D,
+                          Constants.ANGLE_VEL_F);
+
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -59,7 +62,7 @@ public class DrivePID extends Command {
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
 
-    double driveJoy = -OI.getInstance().getY_Left();
+    double driveJoy = OI.getInstance().getY_Left();
     double angleJoy = OI.getInstance().getX_Right(); 
 
     if (driveJoy < 0.05 && driveJoy > -0.05) {
@@ -74,13 +77,15 @@ public class DrivePID extends Command {
   
     //d_pid.setSetpoint(0);
     //a_pid.setSetpoint(0);
+    //SmartDashboard.putNumber("driveSetpoint", driveJoy * Constants.DRIVE_MAX_VEL);
   
-
+    SmartDashboard.putNumber("d_error", d_pid.getError());
+    SmartDashboard.putNumber("f_output", d_pid.getSetpoint());
+  
     drive.arcadeDrive(d_pid.calculate(d_vel, dt), a_pid.calculate(a_vel, dt));
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();
-    lastAng = drive.getGyro().getAngle();
   }
 
   // Make this return true when this Command no longer needs to run execute()

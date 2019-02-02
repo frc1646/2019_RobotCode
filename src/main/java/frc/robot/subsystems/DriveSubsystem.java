@@ -89,7 +89,7 @@ public class DriveSubsystem extends Subsystem {
   }
   
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveWithJoy()); 
+    setDefaultCommand(new DrivePID()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
