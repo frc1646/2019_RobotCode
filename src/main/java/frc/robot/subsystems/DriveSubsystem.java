@@ -8,7 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -128,7 +130,8 @@ public void shiftOff() {
 
 
 private class DriveSide { 
-    private TalonSRX master, slave;  
+    private TalonSRX master;  
+    private VictorSPX slave;
     private Encoder encoder; 
 
     public DriveSide(int port1, int port2, 
@@ -136,10 +139,12 @@ private class DriveSide {
                      int encoder_A, int encoder_B,
                      boolean encoder_inv) {     
       master = new TalonSRX(port1); 
-      slave = new TalonSRX(port2); 
+      slave = new VictorSPX(port2); 
      		 
       master.setInverted(inv1); 
-      slave.setInverted(inv2); 
+      slave.setInverted(inv2);
+
+      master.setNeutralMode(NeutralMode.Brake);
 
       encoder = new Encoder(encoder_A, encoder_B);
       encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);

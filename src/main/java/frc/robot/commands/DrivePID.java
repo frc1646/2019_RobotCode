@@ -79,10 +79,10 @@ public class DrivePID extends Command {
     //a_pid.setSetpoint(0);
     //SmartDashboard.putNumber("driveSetpoint", driveJoy * Constants.DRIVE_MAX_VEL);
   
-    SmartDashboard.putNumber("d_error", d_pid.getError());
+    SmartDashboard.putNumber("a_error", a_pid.getError());
     SmartDashboard.putNumber("f_output", d_pid.getSetpoint());
   
-    drive.arcadeDrive(d_pid.calculate(d_vel, dt), a_pid.calculate(a_vel, dt));
+    drive.arcadeDrive(d_pid.calculate(-d_vel, dt), a_pid.calculate(a_vel, dt));
 
     lastTime = Timer.getFPGATimestamp();
     lastPos = drive.getDistance();

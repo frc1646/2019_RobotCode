@@ -30,8 +30,8 @@ public class RobotMap {
   public static final boolean ENCODER_INV_2 = false;
 
   /* DriveSubsystem */
-  public static final int FRONT_LEFT = 2;
-  public static final int BACK_LEFT = 1;
+  public static final int FRONT_LEFT = 1;
+  public static final int BACK_LEFT = 2;
   public static final int FRONT_RIGHT = 3;
   public static final int BACK_RIGHT = 4;   
 
@@ -48,7 +48,6 @@ public class RobotMap {
   /* PneumaticSubsystem */
   public static final int SHIFTER_PORT_A = 0;
   public static final int SHIFTER_PORT_B = 1;
-
 
   //CargoMechanismSubsystem
   public static final int LEFT_CARGO_ARM_MOTOR_ID =  -1;

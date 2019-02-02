@@ -21,12 +21,12 @@ public class Constants {
     public static final double LOW_AUTOSHIFT = 7;
     public static final double HIGH_AUTOSHIFT = 25;
 
-    public static final double DRIVE_VEL_P = 0;
+    public static final double DRIVE_VEL_P = -0.01;//0.3;
     public static final double DRIVE_VEL_I = 0;
-    public static final double DRIVE_VEL_D = 0; 
+    public static final double DRIVE_VEL_D = 0;//0.015; 
     public static final double DRIVE_VEL_F = 1 / DRIVE_MAX_VEL;
     
-    public static final double ANGLE_VEL_P = 0;
+    public static final double ANGLE_VEL_P = 0.09;
     public static final double ANGLE_VEL_I = 0;
     public static final double ANGLE_VEL_D = 0;
     public static final double ANGLE_VEL_F = 1 / ANGLE_MAX_VEL;
