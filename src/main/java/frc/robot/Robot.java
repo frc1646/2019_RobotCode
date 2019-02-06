@@ -20,6 +20,7 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
+import frc.robot.subsystems.StatusSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem;
   public static PneumaticSubsystem pneumatics;
   public static CameraSubsystem camera;
+  public static StatusSubsystem statusLights;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -48,6 +50,7 @@ public class Robot extends TimedRobot {
     m_oi = OI.getInstance();
     driveSubsystem = DriveSubsystem.getInstance();
     pneumatics = PneumaticSubsystem.getInstance();
+    statusLights = StatusSubsystem.getInstance();
     //camera = CameraSubsystem.getInstance();
 
     // chooser.addOption("My Auto", new MyAutoCommand());

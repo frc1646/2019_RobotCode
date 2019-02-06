@@ -16,6 +16,7 @@ import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.CheesyPID;
 
+
 public class DrivePID extends Command {
 
   private DriveSubsystem drive; 
@@ -24,6 +25,7 @@ public class DrivePID extends Command {
   private double lastTime;
   private double lastPos;
   private double lastAng;
+  private double a_vel;
 
   public DrivePID() {
     requires(drive = DriveSubsystem.getInstance());
@@ -54,7 +56,7 @@ public class DrivePID extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double a_vel = drive.getGyro().getRate();
+    a_vel = (-drive.getGyro().getRawGyroZ() * 2 * (Math.PI / 360)) * 0.2 + 0.8 * a_vel;
     double dt = Timer.getFPGATimestamp() - lastTime;
     double d_vel = (drive.getDistance() - lastPos) / dt;    
 

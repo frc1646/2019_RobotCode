@@ -45,6 +45,11 @@ public class HatchMechanismSubsystem extends Subsystem {
 
   }
 
+  public boolean hasHatch() {
+    return false;
+  }
+  // change this later!
+
   public static HatchMechanismSubsystem getInstance() {
     if (instance == null) {
       instance = new HatchMechanismSubsystem();

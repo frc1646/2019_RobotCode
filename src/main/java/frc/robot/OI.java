@@ -13,6 +13,7 @@ import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
@@ -52,10 +53,11 @@ public class OI {
     
 
 
-    yButton.whenPressed(new ShiftUp());
+    //yButton.whenPressed(new SetStatusLights());
     aButton.whenPressed(new ShiftDown());
     startButton.whenPressed(new CycleDriveMode());
     bButton.whenActive(new ResetGyro());
+  
     //bButton.whileHeld(new DriveToBall());
     //right_bumper.whenPressed(new ToggleShift());
     xButton.whileHeld(new DriveToHatchTarget());
@@ -77,6 +79,15 @@ public class OI {
 
   public double getX_Right() {
     return driver_controller.getRawAxis(4);
+  }
+
+  public boolean bButtonPressed() {
+    return driver_controller.getRawButtonReleased(2);
+    
+  }
+
+  public boolean xButtonPressed() {
+    return driver_controller.getRawButtonReleased(3);
   }
 
   public static OI getInstance() {

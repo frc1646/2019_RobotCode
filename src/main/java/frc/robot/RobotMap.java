@@ -60,6 +60,9 @@ public class RobotMap {
   public static final boolean CLAMP_VALUE = true;
   public static final boolean RELEASING_VALUE = true;
 
+  //StatusLightsSubsystem
+  public static final int BLINKIN_ID = 0;
+
   
 
   // For example to map the left and right motors, you could define the
