@@ -8,12 +8,17 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,7 +37,7 @@ public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private ADXRS450_Gyro gyro;
+  private AHRS gyro;
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
@@ -43,10 +48,8 @@ public class DriveSubsystem extends Subsystem {
   
 
  	private DriveSubsystem() { 
-     gyro = new ADXRS450_Gyro();
-     gyro.calibrate();
-     gyro.reset();
      testCounter = new Counter(RobotMap.TEST_HALL_EFFECT);
+     gyro = new AHRS(SPI.Port.kMXP);
 
     leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
@@ -74,13 +77,15 @@ public class DriveSubsystem extends Subsystem {
     rightSide.resetEncoder();
   }
  
- 	 public double getAngle() {
- 	 	return gyro.getAngle(); 
- 	 } 
+  public AHRS getGyro() {
+    return gyro;
+  }
+
  	 
  	public void resetGyro() { 
  	 gyro.reset(); 
   } 
+
    
   public double getDistanceLeftSide() {
     return leftSide.getDistance();
@@ -93,13 +98,9 @@ public class DriveSubsystem extends Subsystem {
   public double getDistance() {
     return (getDistanceLeftSide() + getDistanceRightSide()) / 2;
   }
- 	 
- 	public void calibrateGyro() { 
- 	  gyro.calibrate(); 
- 	}
   
   public void initDefaultCommand() {
-    setDefaultCommand(new TankPID()); 
+    setDefaultCommand(new DrivePID()); 
   } 
   
 public void tankDrive(double leftPow, double rightPow) {
@@ -138,7 +139,8 @@ public void shiftOff() {
 
 
 private class DriveSide { 
-    private TalonSRX master, slave;  
+    private TalonSRX master;  
+    private VictorSPX slave;
     private Encoder encoder; 
 
     public DriveSide(int port1, int port2, 
@@ -146,10 +148,12 @@ private class DriveSide {
                      int encoder_A, int encoder_B,
                      boolean encoder_inv) {     
       master = new TalonSRX(port1); 
-      slave = new TalonSRX(port2); 
+      slave = new VictorSPX(port2); 
      		 
       master.setInverted(inv1); 
-      slave.setInverted(inv2); 
+      slave.setInverted(inv2);
+
+      master.setNeutralMode(NeutralMode.Brake);
 
       encoder = new Encoder(encoder_A, encoder_B);
       encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
