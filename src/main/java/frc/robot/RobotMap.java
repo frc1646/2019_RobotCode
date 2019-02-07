@@ -54,6 +54,15 @@ public class RobotMap {
   public static final int RIGHT_CARGO_ARM_MOTOR_ID = -1;
   public static final int INTAKE_MOTOR_ID = -1;
 
+  public static final int ULTRA_SENSOR_PING_ID = -1; // sends ping
+  public static final int ULTRA_SENSOR_ECHO_ID = -1; // receives the echo
+
+  public static final int UP_LIMIT_SWITCH_ID = -1;
+  public static final int DOWN_LIMIT_SWITCH_ID = -1;
+
+  public static final int LEFT_EFFECT_SENSOR_ID = -1;
+  public static final int RIGHT_EFFECT_SENSOR_ID = -1;
+
   //HatchMechanismSubsystem
   public static final int RELEASING_HATCH_SOLENOID_ID = -1;
   public static final int CLAMPING_HATCH_SOLENOID_ID = -1;

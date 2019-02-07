@@ -7,64 +7,44 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
 import frc.robot.subsystems.CargoMechanismSubsystem;
-import frc.robot.utils.CheesyPID;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class ChangeCargoAngle extends Command {
-
-  private CheesyPID cargoArmPID;
+public class DriveTest extends Command {
+  
   private CargoMechanismSubsystem cargo;
-  private double lastTime;
-  private double setPoint;
+  private DriveSubsystem drive;
 
-  public ChangeCargoAngle() {
-    requires(cargo = CargoMechanismSubsystem.getInstance());
+  public DriveTest() {
+    requires(drive = DriveSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-  
-  
-  
-  
-    cargoArmPID = new CheesyPID(Constants.CARGO_ARM_ANGLE_P,
-                                  Constants.CARGO_ARM_ANGLE_I,
-                                  Constants.CARGO_ARM_ANGLE_D,
-                                  Constants.CARGO_ARM_ANGLE_F); //cargoArmPID = positional PID
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    cargoArmPID.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double dt = Timer.getFPGATimestamp() - lastTime;
 
-
-    cargoArmPID.setSetpoint(setPoint);
-    cargo.setArmPivotPower(cargoArmPID.calculate(cargo.getAvgCount(), dt));
-
-    SmartDashboard.putNumber("Encoder Raw Count", cargo.getAvgCount());
-    lastTime = Timer.getFPGATimestamp();
+    SmartDashboard.putNumber("encoder count", cargo.getAvgCount());
+    drive.tankDrive(1.0, 1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return cargo.isUpSwitchPressed();
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    cargo.setArmPivotPower(0);
   }
 
   // Called when another command which requires one or more of the same
