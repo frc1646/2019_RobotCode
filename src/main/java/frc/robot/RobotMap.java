@@ -51,9 +51,13 @@ public class RobotMap {
 
 
   //CargoMechanismSubsystem
-  public static final int LEFT_CARGO_ARM_MOTOR_ID =  -1;
-  public static final int RIGHT_CARGO_ARM_MOTOR_ID = -1;
-  public static final int INTAKE_MOTOR_ID = -1;
+  public static final int LEFT_CARGO_ARM_MOTOR_ID =  0;
+  public static final int RIGHT_CARGO_ARM_MOTOR_ID = 0;
+  public static final int INTAKE_MOTOR_ID = 0;
+  public static final int ANALOG_INPUT_FR_ID = 0;
+  public static final int ANALOG_INPUT_FL_ID = 0;
+  public static final int TEST_HALL_EFFECT = 2;
+  // analog inputs must be changed later.
 
   //HatchMechanismSubsystem
   public static final int RELEASING_HATCH_SOLENOID_ID = -1;

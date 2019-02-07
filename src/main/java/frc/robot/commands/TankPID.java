@@ -63,6 +63,7 @@ public class TankPID extends Command {
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
+    SmartDashboard.putNumber("rotations", drive.getRotations());
 
     double leftJoy = OI.getInstance().getY_Left();
     double rightJoy = OI.getInstance().getY_Right();    

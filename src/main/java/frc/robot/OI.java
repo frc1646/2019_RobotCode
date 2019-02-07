@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
+import frc.robot.commands.MoveCargoArm;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
@@ -60,9 +61,10 @@ public class OI {
     backButton.whileHeld(new TankPIDTest(0.2));
   
     yOpButton.whileHeld(new TankPIDTest(0.2));
-    aOpButton.whileHeld(new TankPIDTest(0.4));
+   //aOpButton.whileHeld(new MoveCargoArm());
     bOpButton.whileHeld(new TankPIDTest(0.6));
     xOpButton.whileHeld(new TankPIDTest(1.0));
+
   }
 
   public double getY_Left() {
@@ -77,12 +79,18 @@ public class OI {
     return driver_controller.getRawAxis(4);
   }
 
+  public double getY_Left_Op() {
+    return operator_controller.getRawAxis(1);
+  }
+
   public static OI getInstance() {
     if (instance == null) {
       instance = new OI();
     }
     return instance;
   }
+
+
 
 
 

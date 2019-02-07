@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -36,6 +37,8 @@ public class DriveSubsystem extends Subsystem {
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
 
+  private Counter testCounter;
+
   private boolean highGear;
   
 
@@ -43,6 +46,7 @@ public class DriveSubsystem extends Subsystem {
      gyro = new ADXRS450_Gyro();
      gyro.calibrate();
      gyro.reset();
+     testCounter = new Counter(RobotMap.TEST_HALL_EFFECT);
 
     leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
                               RobotMap.INV_1, RobotMap.INV_2, 
@@ -54,7 +58,12 @@ public class DriveSubsystem extends Subsystem {
                               RobotMap.ENCODER_INV_2); 
     shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
   } 
- 	 
+  
+  public double getRotations() {
+    return testCounter.get();
+  }
+
+  
  	public void setSidePower(double leftPower, double rightPower) { 
  		leftSide.setPower(leftPower); 
  		rightSide.setPower(rightPower); 
