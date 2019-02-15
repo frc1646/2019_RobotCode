@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -32,8 +33,11 @@ public class DriveTest extends Command {
   @Override
   protected void execute() {
 
+    double leftJoy_Y = OI.getInstance().getY_Left();
+    double rightJoy_Y = OI.getInstance().getY_Right();
+
     SmartDashboard.putNumber("encoder count", cargo.getAvgCount());
-    drive.tankDrive(1.0, 1.0);
+    drive.tankDrive(leftJoy_Y, rightJoy_Y);
   }
 
   // Make this return true when this Command no longer needs to run execute()

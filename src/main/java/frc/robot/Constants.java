@@ -21,14 +21,14 @@ public class Constants {
     public static final double LOW_AUTOSHIFT = 7;
     public static final double HIGH_AUTOSHIFT = 25;
 
-    public static final double DRIVE_VEL_P = -0.01;//0.3;
+    public static final double DRIVE_VEL_P = 0;//0.03
     public static final double DRIVE_VEL_I = 0;
     public static final double DRIVE_VEL_D = 0;//0.015; 
     public static final double DRIVE_VEL_F = 1 / DRIVE_MAX_VEL;
     
-    public static final double ANGLE_VEL_P = 0.15;
-    public static final double ANGLE_VEL_I = 0.0009;
-    public static final double ANGLE_VEL_D = 0.01;
+    public static final double ANGLE_VEL_P = 0;
+    public static final double ANGLE_VEL_I = 0;
+    public static final double ANGLE_VEL_D = 0;
     public static final double ANGLE_VEL_F = 1 / ANGLE_MAX_VEL;
 
 
@@ -49,4 +49,6 @@ public class Constants {
     public static final double CARGO_ARM_ANGLE_I = 0;
     public static final double CARGO_ARM_ANGLE_D = 0;
     public static final double CARGO_ARM_ANGLE_F = 0;
+
+    public static final double CARGO_ARM_MAX_ENCODER_COUNT = 20000;
 }

@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
@@ -18,6 +19,7 @@ import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
 import frc.robot.commands.ToggleShift;
+import frc.robot.commands.UnclampHatch;
 
 
 /**
@@ -41,7 +43,7 @@ public class OI {
     aButton = new JoystickButton(driver_controller, 1);
     startButton = new JoystickButton(driver_controller, 8);
     xButton = new JoystickButton(driver_controller, 3);
-    //right_bumper = new JoystickButton(driver_controller, 6);
+    right_bumper = new JoystickButton(driver_controller, 6);
     bButton = new JoystickButton(driver_controller, 2);
     backButton = new JoystickButton(driver_controller, 7);
 
@@ -59,14 +61,14 @@ public class OI {
     bButton.whenActive(new ResetGyro());
   
     //bButton.whileHeld(new DriveToBall());
-    //right_bumper.whenPressed(new ToggleShift());
+    right_bumper.whenPressed(new ToggleShift());
     xButton.whileHeld(new DriveToHatchTarget());
     backButton.whileHeld(new TankPIDTest(0.2));
   
-    yOpButton.whileHeld(new TankPIDTest(0.2));
-    aOpButton.whileHeld(new TankPIDTest(0.4));
-    bOpButton.whileHeld(new TankPIDTest(0.6));
-    xOpButton.whileHeld(new TankPIDTest(1.0));
+    yOpButton.whileHeld(new ClampHatch());
+    aOpButton.whileHeld(new UnclampHatch());
+    //bOpButton.whileHeld(new TankPIDTest(0.6));
+    //xOpButton.whileHeld(new TankPIDTest(1.0));
   }
 
   public double getY_Left() {
@@ -79,6 +81,19 @@ public class OI {
 
   public double getX_Right() {
     return driver_controller.getRawAxis(4);
+  }
+
+  public double getOPY_Right() {
+    return operator_controller.getRawAxis(5);
+  }
+
+  public boolean getOP_bButtonPressed() {
+    return operator_controller.getRawButton(2);
+  }
+
+  public boolean getOP_xButtonPressed() {
+    return operator_controller.getRawButton(3);
+    
   }
 
   public boolean bButtonPressed() {

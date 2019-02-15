@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -16,32 +18,30 @@ import frc.robot.RobotMap;
  */
 public class HatchMechanismSubsystem extends Subsystem {
 
-  private Solenoid clampingSolenoid;
-  private Solenoid releasingSolenoid;
+  private DoubleSolenoid clampingSolenoid;
   private static HatchMechanismSubsystem instance;
   //This is where we allocate the space for the Solenoids used later
 
   private HatchMechanismSubsystem() {
-    clampingSolenoid = new Solenoid(RobotMap.RELEASING_HATCH_SOLENOID_ID);
-    releasingSolenoid = new Solenoid(RobotMap.CLAMPING_HATCH_SOLENOID_ID);
+    clampingSolenoid = new DoubleSolenoid(RobotMap.RELEASING_HATCH_SOLENOID_ID, RobotMap.CLAMPING_HATCH_SOLENOID_ID);
     
   }
 
   public void clampHatch() {
-    clampingSolenoid.set(RobotMap.CLAMP_VALUE);
+    clampingSolenoid.set(Value.kForward);
   }
 
   public void unclampHatch() {
-    clampingSolenoid.set(!RobotMap.CLAMP_VALUE);
+    clampingSolenoid.set(Value.kReverse);
 
   }
 
   public void extendReleasingPistons() {
-    clampingSolenoid.set(RobotMap.RELEASING_VALUE);
+    //clampingSolenoid.set(RobotMap.RELEASING_VALUE);
  }
 
   public void retractReleasingPistons() {
-    clampingSolenoid.set(!RobotMap.RELEASING_VALUE);
+    //clampingSolenoid.set(!RobotMap.RELEASING_VALUE);
 
   }
 

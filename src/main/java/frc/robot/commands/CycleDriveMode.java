@@ -9,11 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class CycleDriveMode extends Command {
+
+  private DriveSubsystem drive;
+
   public CycleDriveMode() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(drive = DriveSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -34,7 +39,7 @@ public class CycleDriveMode extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

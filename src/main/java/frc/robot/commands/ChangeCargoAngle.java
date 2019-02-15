@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.utils.CheesyPID;
 
@@ -30,35 +31,61 @@ public class ChangeCargoAngle extends Command {
   
   
   
-    cargoArmPID = new CheesyPID(Constants.CARGO_ARM_ANGLE_P,
+    /*cargoArmPID = new CheesyPID(Constants.CARGO_ARM_ANGLE_P,
                                   Constants.CARGO_ARM_ANGLE_I,
                                   Constants.CARGO_ARM_ANGLE_D,
                                   Constants.CARGO_ARM_ANGLE_F); //cargoArmPID = positional PID
+                                  */
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    cargoArmPID.reset();
+    //cargoArmPID.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double dt = Timer.getFPGATimestamp() - lastTime;
+    //double dt = Timer.getFPGATimestamp() - lastTime;
+    if(cargo.isDownSwitchPressed()) {
+      cargo.resetHallEffectSensors();
+    }
+
+    //cargoArmPID.setSetpoint(setPoint);
+    //cargo.setArmPivotPower(cargoArmPID.calculate(cargo.getAvgCount(), dt));
+    
+    if (OI.getInstance().getOP_xButtonPressed() && !cargo.isBallIn()){
+      cargo.setIntakeRollerPower(-0.9); //intaking
+    } else if (OI.getInstance().getOP_bButtonPressed()){
+      cargo.setIntakeRollerPower(0.9); //outaking
+    }else{
+      cargo.setIntakeRollerPower(0.0);
+    }  
+
+    if (cargo.isDownSwitchPressed()) {
+      cargo.resetHallEffectSensors();
+    }
+
+    if(OI.getInstance().getOP_xButtonPressed() && cargo.isBallIn() && cargo.getAvgCount() < Constants.CARGO_ARM_MAX_ENCODER_COUNT)  { 
+      cargo.setArmPivotPower(-0.9);
+    } else if (!cargo.isDownSwitchPressed()) {
+      cargo.setArmPivotPower(OI.getInstance().getOPY_Right());
+      //cargo.setArmPivotPower(0);
+    } else {
+      cargo.setArmPivotPower(0);
+    }
 
 
-    cargoArmPID.setSetpoint(setPoint);
-    cargo.setArmPivotPower(cargoArmPID.calculate(cargo.getAvgCount(), dt));
-
+    SmartDashboard.putNumber("UltraSonic Distance", cargo.getUltrasonicDistance());
     SmartDashboard.putNumber("Encoder Raw Count", cargo.getAvgCount());
-    lastTime = Timer.getFPGATimestamp();
+    //lastTime = Timer.getFPGATimestamp();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return cargo.isUpSwitchPressed();
+    return false;//cargo.isUpSwitchPressed();
   }
 
   // Called once after isFinished returns true

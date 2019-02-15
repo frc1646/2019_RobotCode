@@ -32,7 +32,7 @@ public class CargoMechanismSubsystem extends Subsystem {
   private Ultrasonic ultra;
   private DigitalInput upLimitSwitch, downLimitSwitch;
   private Counter leftEffectSensor, rightEffectSensor;
-  private Encoder cargoEncoder;
+  //private Encoder cargoEncoder;
 
   public static CargoMechanismSubsystem instance;
 
@@ -41,15 +41,20 @@ public class CargoMechanismSubsystem extends Subsystem {
     rightArmMotor = new VictorSP(RobotMap.RIGHT_CARGO_ARM_MOTOR_ID);
     intakeMotor = new VictorSP(RobotMap.INTAKE_MOTOR_ID);
 
+    leftArmMotor.setInverted(RobotMap.LEFT_CARGO_MOTOR_INV);
+    rightArmMotor.setInverted(RobotMap.RIGHT_CARGO_MOTOR_INV);
+    intakeMotor.setInverted(RobotMap.INTAKE_MOTOR_INV);
+
     ultra = new Ultrasonic(RobotMap.ULTRA_SENSOR_PING_ID, RobotMap.ULTRA_SENSOR_ECHO_ID);
-    
-    upLimitSwitch = new DigitalInput(RobotMap.UP_LIMIT_SWITCH_ID);
+    ultra.setAutomaticMode(true);
+
+    //upLimitSwitch = new DigitalInput(RobotMap.UP_LIMIT_SWITCH_ID);
     downLimitSwitch = new DigitalInput(RobotMap.DOWN_LIMIT_SWITCH_ID);
     
     leftEffectSensor = new Counter(RobotMap.LEFT_EFFECT_SENSOR_ID);
     rightEffectSensor = new Counter(RobotMap.RIGHT_EFFECT_SENSOR_ID);
 
-    cargoEncoder = new Encoder(RobotMap.LEFT_EFFECT_SENSOR_ID, RobotMap.RIGHT_EFFECT_SENSOR_ID);
+    //cargoEncoder = new Encoder(RobotMap.LEFT_EFFECT_SENSOR_ID, RobotMap.RIGHT_EFFECT_SENSOR_ID);
   }
 
   public static CargoMechanismSubsystem getInstance() {
@@ -60,13 +65,24 @@ public class CargoMechanismSubsystem extends Subsystem {
   }
 
   public double getAvgCount() {
-    //return (leftEffectSensor.get() + rightEffectSensor.get()) / 2;
-    return cargoEncoder.getRaw();
+    return rightEffectSensor.get();
+    //return cargoEncoder.getRaw();
   }
 
-  public boolean isBall_IN() {
-    return ultra.getRangeMM() < 0;
+  public void resetHallEffectSensors() {
+    leftEffectSensor.reset();
+    rightEffectSensor.reset();
   }
+
+  public boolean isBallIn() {
+    return ultra.getRangeInches() < 2.5;
+  }
+
+  public double getUltrasonicDistance() {
+    System.out.println("UltraSonic Reading:" + ultra.getRangeInches());
+    return ultra.getRangeInches();
+  }
+
 
   public boolean isUpSwitchPressed() {
     return upLimitSwitch.get();
@@ -85,14 +101,14 @@ public class CargoMechanismSubsystem extends Subsystem {
   public void setArmPivotPower(double power) {
     rightArmMotor.set(power);
     leftArmMotor.set(power);
+    System.out.println("Setting power to " + power);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ChangeCargoAngle());
   }
 
 

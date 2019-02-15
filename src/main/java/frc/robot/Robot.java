@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.CameraSubsystem;
+import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
   public static PneumaticSubsystem pneumatics;
   public static CameraSubsystem camera;
   public static StatusSubsystem statusLights;
+  public static CargoMechanismSubsystem cargoSubsystem;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
     driveSubsystem = DriveSubsystem.getInstance();
     pneumatics = PneumaticSubsystem.getInstance();
     statusLights = StatusSubsystem.getInstance();
+    cargoSubsystem = CargoMechanismSubsystem.getInstance();
     //camera = CameraSubsystem.getInstance();
 
     // chooser.addOption("My Auto", new MyAutoCommand());

@@ -47,11 +47,11 @@ public class DriveSubsystem extends Subsystem {
  	private DriveSubsystem() { 
      gyro = new AHRS(SPI.Port.kMXP);
 
-    leftSide = new DriveSide( RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, 
+    leftSide = new DriveSide( RobotMap.LEFT_TALON, RobotMap.LEFT_VICTOR, 
                               RobotMap.INV_1, RobotMap.INV_2, 
                               RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B,
                               RobotMap.ENCODER_INV_1); 
-    rightSide = new DriveSide(RobotMap.FRONT_RIGHT, RobotMap.BACK_RIGHT,
+    rightSide = new DriveSide(RobotMap.RIGHT_TALON, RobotMap.RIGHT_VICTOR,
                               RobotMap.INV_3, RobotMap.INV_4,
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
@@ -91,8 +91,9 @@ public class DriveSubsystem extends Subsystem {
   }
   
   public void initDefaultCommand() {
-    setDefaultCommand(new DrivePID()); 
-  } 
+    //setDefaultCommand(new DrivePID()); 
+    setDefaultCommand(new DriveWithJoy());
+  }
   
 public void tankDrive(double leftPow, double rightPow) {
   setSidePower(leftPow, rightPow);

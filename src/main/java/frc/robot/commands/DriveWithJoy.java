@@ -64,6 +64,7 @@ public class DriveWithJoy extends Command {
     SmartDashboard.putNumber("angle", angle);
     double leftPow = OI.getInstance().getY_Left();
     double rightPow = OI.getInstance().getX_Right();
+    double rightPow_Tank = OI.getInstance().getY_Right();
 
     if (leftPow < 0.05 && leftPow > -0.05) {
       leftPow = 0;  
@@ -75,7 +76,7 @@ public class DriveWithJoy extends Command {
     if (RobotMap.driveMode == DriveMode.ARCADE) {
       drive.arcadeDrive(leftPow, rightPow);  
     } else if (RobotMap.driveMode == DriveMode.TANK) {
-      drive.tankDrive(leftPow, rightPow);
+      drive.tankDrive(leftPow, rightPow_Tank);
     }
 
     // if ((Timer.getFPGATimestamp() - lastShift) > 0.05) {
