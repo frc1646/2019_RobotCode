@@ -34,10 +34,10 @@ public class RobotMap {
   public static final boolean ENCODER_INV_2 = false;
 
   /* DriveSubsystem */
-  public static final int LEFT_TALON = 0;
-  public static final int LEFT_VICTOR = 1;
-  public static final int RIGHT_TALON = 2;
-  public static final int RIGHT_VICTOR = 3;   
+  public static final int LEFT_TALON = 1;
+  public static final int LEFT_VICTOR = 2;
+  public static final int RIGHT_TALON = 3;
+  public static final int RIGHT_VICTOR = 4;   
 
   public static final boolean INV_1 = false;
   public static final boolean INV_2 = false;
