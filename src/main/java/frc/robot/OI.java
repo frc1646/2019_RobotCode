@@ -41,20 +41,6 @@ public class OI {
   private OI() {
     driver_controller = new Xbox(RobotMap.DRIVER_CONTROLLER_PORT);
     operator_controller = new Xbox(RobotMap.OPERATOR_CONTROLLER_PORT);
-
-    yButton = new JoystickButton(driver_controller, 4);
-    aButton = new JoystickButton(driver_controller, 1);
-    startButton = new JoystickButton(driver_controller, 8);
-    xButton = new JoystickButton(driver_controller, 3);
-    right_bumper = new JoystickButton(driver_controller, 6);
-    bButton = new JoystickButton(driver_controller, 2);
-    backButton = new JoystickButton(driver_controller, 7);
-
-
-    yOpButton = new JoystickButton(operator_controller, 4);
-    aOpButton = new JoystickButton(operator_controller, 1);
-    xOpButton = new JoystickButton(operator_controller, 3);
-    bOpButton = new JoystickButton(operator_controller, 2);
   }
 
   public void createDriver() {
@@ -62,7 +48,6 @@ public class OI {
   }
 
   public void createOperator() {
-    operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
     operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
   }
   public boolean getIntakeButton() {

@@ -1,4 +1,4 @@
-package lib.frc1747.controller.button;
+package frc.robot.utils.controller.button;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

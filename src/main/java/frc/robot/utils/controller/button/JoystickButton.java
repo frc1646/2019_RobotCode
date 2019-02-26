@@ -1,4 +1,4 @@
-package lib.frc1747.controller.button;
+package frc.robot.utils.controller.button;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008-2017. All Rights Reserved.                        */
