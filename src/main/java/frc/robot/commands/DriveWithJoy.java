@@ -21,6 +21,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.DriveMode;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
+import frc.robot.utils.controller.Xbox;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -62,9 +63,9 @@ public class DriveWithJoy extends Command {
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
     SmartDashboard.putNumber("angle", angle);
-    double leftPow = OI.getInstance().getY_Left();
-    double rightPow = OI.getInstance().getX_Right();
-    double rightPow_Tank = OI.getInstance().getY_Right();
+    double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+    double rightPow_Tank = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_VERTICAL);
 
     if (leftPow < 0.05 && leftPow > -0.05) {
       leftPow = 0;  

@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
@@ -20,6 +21,8 @@ import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
 import frc.robot.commands.ToggleShift;
 import frc.robot.commands.UnclampHatch;
+import frc.robot.utils.controller.Logitech;
+import frc.robot.utils.controller.Xbox;
 
 
 /**
@@ -29,15 +32,15 @@ import frc.robot.commands.UnclampHatch;
 public class OI {
 
   private static OI instance;
-  private Joystick driver_controller, operator_controller;
+  private Xbox driver_controller, operator_controller;
   private JoystickButton yButton, aButton, startButton, xButton, bButton;
   private JoystickButton yOpButton, aOpButton, xOpButton, bOpButton;
   private JoystickButton right_bumper;
   private JoystickButton backButton;
 
   private OI() {
-    driver_controller = new Joystick(RobotMap.DRIVER_CONTROLLER_PORT);
-    operator_controller = new Joystick(RobotMap.OPERATOR_CONTROLLER_PORT);
+    driver_controller = new Xbox(RobotMap.DRIVER_CONTROLLER_PORT);
+    operator_controller = new Xbox(RobotMap.OPERATOR_CONTROLLER_PORT);
 
     yButton = new JoystickButton(driver_controller, 4);
     aButton = new JoystickButton(driver_controller, 1);
@@ -52,59 +55,27 @@ public class OI {
     aOpButton = new JoystickButton(operator_controller, 1);
     xOpButton = new JoystickButton(operator_controller, 3);
     bOpButton = new JoystickButton(operator_controller, 2);
-    
-
-
-    //yButton.whenPressed(new SetStatusLights());
-    aButton.whenPressed(new ShiftDown());
-    startButton.whenPressed(new CycleDriveMode());
-    bButton.whenActive(new ResetGyro());
-  
-    //bButton.whileHeld(new DriveToBall());
-    right_bumper.whenPressed(new ToggleShift());
-    xButton.whileHeld(new DriveToHatchTarget());
-    backButton.whileHeld(new TankPIDTest(0.2));
-  
-    yOpButton.whileHeld(new ClampHatch());
-    aOpButton.whileHeld(new UnclampHatch());
-    //bOpButton.whileHeld(new TankPIDTest(0.6));
-    //xOpButton.whileHeld(new TankPIDTest(1.0));
   }
 
-  public double getY_Left() {
-    return driver_controller.getRawAxis(1);
+  public void createDriver() {
+    driver_controller.getButton(Xbox.Y);
   }
 
-  public double getY_Right() {
-    return driver_controller.getRawAxis(5);
+  public void createOperator() {
+    operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
+  }
+  public boolean getIntakeButton() {
+    return operator_controller.getButton(Xbox.LT).get();
   }
 
-  public double getX_Right() {
-    return driver_controller.getRawAxis(4);
+  public Xbox getDriver() {
+    return driver_controller;
   }
 
-  public double getOPY_Right() {
-    return operator_controller.getRawAxis(5);
+  public Xbox getOperator() {
+    return operator_controller;
   }
-
-  public boolean getOP_bButtonPressed() {
-    return operator_controller.getRawButton(2);
-  }
-
-  public boolean getOP_xButtonPressed() {
-    return operator_controller.getRawButton(3);
-    
-  }
-
-  public boolean bButtonPressed() {
-    return driver_controller.getRawButtonReleased(2);
-    
-  }
-
-  public boolean xButtonPressed() {
-    return driver_controller.getRawButtonReleased(3);
-  }
-
   public static OI getInstance() {
     if (instance == null) {
       instance = new OI();
@@ -112,35 +83,6 @@ public class OI {
     return instance;
   }
 
-
-
-  //// CREATING BUTTONS
-  // One type of button is a joystick button which is any button on a
-  //// joystick.
-  // You create one by telling it which joystick it's on and which button
-  // number it is.
-  // Joystick stick = new Joystick(port);
-  // Button button = new JoystickButton(stick, buttonNumber);
-
-  // There are a few additional built in buttons you can use. Additionally,
-  // by subclassing Button you can create custom triggers and bind those to
-  // commands the same as any other Button.
-
-  //// TRIGGERING COMMANDS WITH BUTTONS
-  // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
-
-  // Start the command when the button is pressed and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenPressed(new ExampleCommand());
-
-  // Run the command while the button is being held down and interrupt it once
-  // the button is released.
-  // button.whileHeld(new ExampleCommand());
-
-  // Start the command when the button is released and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
   
 
 }

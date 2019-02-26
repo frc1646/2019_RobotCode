@@ -15,6 +15,7 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.utils.CheesyPID;
+import frc.robot.utils.controller.Xbox;
 
 public class ChangeCargoAngle extends Command {
 
@@ -25,39 +26,20 @@ public class ChangeCargoAngle extends Command {
 
   public ChangeCargoAngle() {
     requires(cargo = CargoMechanismSubsystem.getInstance());
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  
-  
-  
-  
-    /*cargoArmPID = new CheesyPID(Constants.CARGO_ARM_ANGLE_P,
-                                  Constants.CARGO_ARM_ANGLE_I,
-                                  Constants.CARGO_ARM_ANGLE_D,
-                                  Constants.CARGO_ARM_ANGLE_F); //cargoArmPID = positional PID
-                                  */
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //cargoArmPID.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //double dt = Timer.getFPGATimestamp() - lastTime;
-    if(cargo.isDownSwitchPressed()) {
-      cargo.resetHallEffectSensors();
-    }
-
-    //cargoArmPID.setSetpoint(setPoint);
-    //cargo.setArmPivotPower(cargoArmPID.calculate(cargo.getAvgCount(), dt));
-    
-    if (OI.getInstance().getOP_xButtonPressed() && !cargo.isBallIn()){
+   
+    if (OI.getInstance().getOperator().getButton(Xbox.X).get() && !cargo.isBallIn()) {
       cargo.setIntakeRollerPower(-0.9); //intaking
-    } else if (OI.getInstance().getOP_bButtonPressed()){
+    } else if (OI.getInstance().getOperator().getButton(Xbox.B).get()) {
       cargo.setIntakeRollerPower(0.9); //outaking
     }else{
       cargo.setIntakeRollerPower(0.0);
@@ -67,11 +49,10 @@ public class ChangeCargoAngle extends Command {
       cargo.resetHallEffectSensors();
     }
 
-    if(OI.getInstance().getOP_xButtonPressed() && cargo.isBallIn() && cargo.getAvgCount() < Constants.CARGO_ARM_MAX_ENCODER_COUNT)  { 
+    if(OI.getInstance().getOperator().getButton(Xbox.X).get() && cargo.isBallIn() && cargo.getAvgCount() < Constants.CARGO_ARM_MAX_ENCODER_COUNT)  { 
       cargo.setArmPivotPower(-0.9);
     } else if (!cargo.isDownSwitchPressed()) {
-      cargo.setArmPivotPower(OI.getInstance().getOPY_Right());
-      //cargo.setArmPivotPower(0);
+      cargo.setArmPivotPower(OI.getInstance().getOperator().getAxis(Xbox.RIGHT_VERTICAL));
     } else {
       cargo.setArmPivotPower(0);
     }

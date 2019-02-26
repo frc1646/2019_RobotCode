@@ -15,6 +15,7 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.CheesyPID;
+import frc.robot.utils.controller.Xbox;
 
 
 public class DrivePID extends Command {
@@ -64,8 +65,8 @@ public class DrivePID extends Command {
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
 
-    double driveJoy = OI.getInstance().getY_Left();
-    double angleJoy = OI.getInstance().getX_Right(); 
+    double driveJoy = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double angleJoy = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL); 
 
     if (driveJoy < 0.05 && driveJoy > -0.05) {
       driveJoy = 0;  

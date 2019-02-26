@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
 public class DriveTest extends Command {
   
@@ -33,8 +34,8 @@ public class DriveTest extends Command {
   @Override
   protected void execute() {
 
-    double leftJoy_Y = OI.getInstance().getY_Left();
-    double rightJoy_Y = OI.getInstance().getY_Right();
+    double leftJoy_Y = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightJoy_Y = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_VERTICAL);
 
     SmartDashboard.putNumber("encoder count", cargo.getAvgCount());
     drive.tankDrive(leftJoy_Y, rightJoy_Y);

@@ -15,6 +15,7 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.CheesyPID;
+import frc.robot.utils.controller.Xbox;
 
 public class TankPID extends Command {
 
@@ -64,8 +65,8 @@ public class TankPID extends Command {
     SmartDashboard.putNumber("leftVel", leftVel);
     SmartDashboard.putNumber("rightVel", rightVel);
 
-    double leftJoy = OI.getInstance().getY_Left();
-    double rightJoy = OI.getInstance().getY_Right();    
+    double leftJoy = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightJoy = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_VERTICAL);    
 
     if (leftJoy < 0.05 && leftJoy > -0.05) {
       leftJoy = 0;  

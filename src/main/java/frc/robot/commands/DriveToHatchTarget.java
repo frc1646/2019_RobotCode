@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
 public class DriveToHatchTarget extends Command {
   DriveSubsystem drive;
@@ -36,10 +37,9 @@ public class DriveToHatchTarget extends Command {
     System.out.println("Current center is: " + x);
     if (camera.isBayFound()){
     drive.arcadeDrive(-0.5, (camera.getBayCenter()/(camera.getWidth() * 2)));
-
-     } else {
-    double leftPow = OI.getInstance().getY_Left();
-    double rightPow = OI.getInstance().getX_Right();
+    } else {
+    double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
 
     SmartDashboard.putNumber("leftPow", leftPow);
     SmartDashboard.putNumber("rightPow", rightPow);

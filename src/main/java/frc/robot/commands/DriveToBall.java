@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
 public class DriveToBall extends Command {
   
@@ -45,8 +46,8 @@ public class DriveToBall extends Command {
       drive.arcadeDrive(1.0 , x/(camera.getWidth()));
     
     } else {
-      double leftPow = OI.getInstance().getY_Left();
-      double rightPow = OI.getInstance().getX_Right();
+      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
 
       SmartDashboard.putNumber("leftPow", leftPow);
       SmartDashboard.putNumber("rightPow", rightPow);
