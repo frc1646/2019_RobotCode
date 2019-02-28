@@ -19,11 +19,7 @@ public class RobotMap {
     ARCADE, TANK
   }
 
-  public enum ArmDirection {
-    MOVE_UP, MOVE_DOWN
-  }
-
-  public static volatile DriveMode driveMode = DriveMode.TANK;
+  public static volatile DriveMode driveMode = DriveMode.ARCADE;
 
   /* OI */
   public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -34,10 +30,10 @@ public class RobotMap {
   public static final boolean ENCODER_INV_2 = false;
 
   /* DriveSubsystem */
-  public static final int LEFT_TALON = 1;
-  public static final int LEFT_VICTOR = 2;
-  public static final int RIGHT_TALON = 3;
-  public static final int RIGHT_VICTOR = 4;   
+  public static final int FRONT_LEFT = 1;
+  public static final int BACK_LEFT = 2;
+  public static final int FRONT_RIGHT = 3;
+  public static final int BACK_RIGHT = 4;   
 
   public static final boolean INV_1 = false;
   public static final boolean INV_2 = false;
@@ -54,27 +50,19 @@ public class RobotMap {
   public static final int SHIFTER_PORT_B = 1;
 
   //CargoMechanismSubsystem
-  public static final int LEFT_CARGO_ARM_MOTOR_ID =  7;
-  public static final boolean LEFT_CARGO_MOTOR_INV = true;
-  public static final int RIGHT_CARGO_ARM_MOTOR_ID = 8;
-  public static final boolean RIGHT_CARGO_MOTOR_INV = false;
-  public static final int INTAKE_MOTOR_ID = 9;
-  public static final boolean INTAKE_MOTOR_INV = false;
-
-  public static final int ULTRA_SENSOR_PING_ID = 6; // sends ping
-  public static final int ULTRA_SENSOR_ECHO_ID = 5; // receives the echo
-
-  public static final int UP_LIMIT_SWITCH_ID = 7;
-  public static final int DOWN_LIMIT_SWITCH_ID = 4;
-
-  public static final int LEFT_EFFECT_SENSOR_ID = 2;
-  public static final int RIGHT_EFFECT_SENSOR_ID = 3;
+  public static final int LEFT_CARGO_ARM_MOTOR_ID =  0;
+  public static final int RIGHT_CARGO_ARM_MOTOR_ID = 0;
+  public static final int INTAKE_MOTOR_ID = 0;
+  public static final int ANALOG_INPUT_FR_ID = 0;
+  public static final int ANALOG_INPUT_FL_ID = 0;
+  public static final int TEST_HALL_EFFECT = 2;
+  // analog inputs must be changed later.
 
   //HatchMechanismSubsystem
-  public static final int RELEASING_HATCH_SOLENOID_ID = 2;
-  public static final int CLAMPING_HATCH_SOLENOID_ID = 3;
-  //public static final Value CLAMP_VALUE = true;
-  //public static final Value RELEASING_VALUE = true;
+  public static final int RELEASING_HATCH_SOLENOID_ID = -1;
+  public static final int CLAMPING_HATCH_SOLENOID_ID = -1;
+  public static final boolean CLAMP_VALUE = true;
+  public static final boolean RELEASING_VALUE = true;
 
   //StatusLightsSubsystem
   public static final int BLINKIN_ID = 0;
