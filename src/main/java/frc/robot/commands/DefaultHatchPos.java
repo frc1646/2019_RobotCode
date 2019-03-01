@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.HatchMechanismSubsystem;
 
-public class ClampHatch extends Command {
-
-  private HatchMechanismSubsystem hatchSub;
+public class DefaultHatchPos extends Command {
+  private HatchMechanismSubsystem hatch;
+  private double startTime;
   private double endTime;
 
-  public ClampHatch() {
-    requires(hatchSub = HatchMechanismSubsystem.getInstance());
+  public DefaultHatchPos() {
+    requires(hatch = HatchMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,8 +25,10 @@ public class ClampHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    hatchSub.clampHatch();
-    endTime = Timer.getFPGATimestamp() + 0.1;
+    startTime = Timer.getFPGATimestamp();
+   // hatch.clampHatch();
+    hatch.retractReleasingPistons();
+    endTime = startTime + 0.1;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,7 +45,7 @@ public class ClampHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.offHatch();
+    hatch.scorePistonsOff();
   }
 
   // Called when another command which requires one or more of the same

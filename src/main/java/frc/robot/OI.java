@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
+import frc.robot.commands.DefaultHatchPos;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.ScoreHatch;
 import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
@@ -41,15 +43,22 @@ public class OI {
   private OI() {
     driver_controller = new Xbox(RobotMap.DRIVER_CONTROLLER_PORT);
     operator_controller = new Xbox(RobotMap.OPERATOR_CONTROLLER_PORT);
+
+    createDriver();
   }
 
   public void createDriver() {
-    driver_controller.getButton(Xbox.Y);
+    driver_controller.getButton(Xbox.RB).whenPressed(new ToggleShift());
+    driver_controller.getButton(Xbox.X).whenPressed(new ClampHatch());
+    driver_controller.getButton(Xbox.B).whenPressed(new UnclampHatch());
+    driver_controller.getButton(Xbox.Y).whenPressed(new ScoreHatch());
+    driver_controller.getButton(Xbox.A).whenPressed(new DefaultHatchPos());
   }
 
   public void createOperator() {
-    operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
+    //operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
   }
+
   public boolean getIntakeButton() {
     return operator_controller.getButton(Xbox.LT).get();
   }

@@ -14,6 +14,7 @@ import frc.robot.subsystems.HatchMechanismSubsystem;
 public class UnclampHatch extends Command {
 
   private HatchMechanismSubsystem hatchSub;
+  private double endTime;
 
   public UnclampHatch() {
     requires(hatchSub = HatchMechanismSubsystem.getInstance());
@@ -24,6 +25,7 @@ public class UnclampHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    endTime = Timer.getFPGATimestamp() + 0.1;
     hatchSub.unclampHatch();
   }
 
@@ -35,12 +37,13 @@ public class UnclampHatch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Timer.getFPGATimestamp() >= endTime;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    hatchSub.offHatch();
   }
 
   // Called when another command which requires one or more of the same

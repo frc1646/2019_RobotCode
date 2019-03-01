@@ -18,17 +18,21 @@ import frc.robot.RobotMap;
  */
 public class HatchMechanismSubsystem extends Subsystem {
 
-  private DoubleSolenoid clampingSolenoid;
+  private DoubleSolenoid clampingSolenoid, scoreSolenoid;
   private static HatchMechanismSubsystem instance;
   //This is where we allocate the space for the Solenoids used later
 
   private HatchMechanismSubsystem() {
     clampingSolenoid = new DoubleSolenoid(RobotMap.RELEASING_HATCH_SOLENOID_ID, RobotMap.CLAMPING_HATCH_SOLENOID_ID);
-    
+    scoreSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_A, RobotMap.HATCH_EXTEND_B);
   }
 
   public void clampHatch() {
     clampingSolenoid.set(Value.kForward);
+  }
+
+  public void offHatch() {
+    clampingSolenoid.set(Value.kOff);
   }
 
   public void unclampHatch() {
@@ -37,11 +41,15 @@ public class HatchMechanismSubsystem extends Subsystem {
   }
 
   public void extendReleasingPistons() {
-    //clampingSolenoid.set(RobotMap.RELEASING_VALUE);
+    scoreSolenoid.set(Value.kForward);
  }
 
+  public void scorePistonsOff() {
+    scoreSolenoid.set(Value.kOff);
+  }
+
   public void retractReleasingPistons() {
-    //clampingSolenoid.set(!RobotMap.RELEASING_VALUE);
+    scoreSolenoid.set(Value.kReverse);
 
   }
 

@@ -108,7 +108,7 @@ public class CargoMechanismSubsystem extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ChangeCargoAngle());
+    //setDefaultCommand(new ChangeCargoAngle());
   }
 
 

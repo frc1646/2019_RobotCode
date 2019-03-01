@@ -7,12 +7,14 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.HatchMechanismSubsystem;
 
 public class ScoreHatch extends Command {
 
   private HatchMechanismSubsystem hatchSub;
+  private double endTime;
 
   public ScoreHatch() {
 
@@ -24,8 +26,8 @@ public class ScoreHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
-    hatchSub.unclampHatch();
+    endTime = Timer.getFPGATimestamp() + 0.1;
+    //hatchSub.unclampHatch();
     hatchSub.extendReleasingPistons();
   }
 
@@ -38,18 +40,19 @@ public class ScoreHatch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Timer.getFPGATimestamp() >= endTime;
     //Might change this to true
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.retractReleasingPistons();
+    hatchSub.scorePistonsOff();
+    //hatchSub.retractReleasingPistons();
   }
 
   // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+  // ssubsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();
