@@ -11,14 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.HatchMechanismSubsystem;
 
-public class ScoreHatch extends Command {
-
-  private HatchMechanismSubsystem hatchSub;
+public class RetractHatch extends Command {
+  private HatchMechanismSubsystem hatch;
+  private double startTime;
   private double endTime;
 
-  public ScoreHatch() {
-
-    requires(hatchSub = HatchMechanismSubsystem.getInstance());
+  public RetractHatch() {
+    requires(hatch = HatchMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,11 +25,11 @@ public class ScoreHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    endTime = Timer.getFPGATimestamp() + 0.1;
-    //hatchSub.unclampHatch();
-    hatchSub.extendReleasingPistons();
+    startTime = Timer.getFPGATimestamp();
+   // hatch.clampHatch();
+    hatch.retractReleasingPistons();
+    endTime = startTime + 0.1;
   }
-
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -41,18 +40,17 @@ public class ScoreHatch extends Command {
   @Override
   protected boolean isFinished() {
     return Timer.getFPGATimestamp() >= endTime;
-    //Might change this to true
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.scorePistonsOff();
-    //hatchSub.retractReleasingPistons();
+    System.out.println("Retract Finished");
+    hatch.scorePistonsOff();
   }
 
   // Called when another command which requires one or more of the same
-  // ssubsystems is scheduled to run
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();

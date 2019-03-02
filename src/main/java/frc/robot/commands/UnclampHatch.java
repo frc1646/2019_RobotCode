@@ -43,6 +43,7 @@ public class UnclampHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("unclampHath Finished");
     hatchSub.offHatch();
   }
 

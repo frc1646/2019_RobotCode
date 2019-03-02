@@ -23,7 +23,7 @@ public class RobotMap {
     MOVE_UP, MOVE_DOWN
   }
 
-  public static volatile DriveMode driveMode = DriveMode.TANK;
+  public static volatile DriveMode driveMode = DriveMode.ARCADE;
 
   /* OI */
   public static final int DRIVER_CONTROLLER_PORT = 0;

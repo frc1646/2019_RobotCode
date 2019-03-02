@@ -38,7 +38,7 @@ public class DriveToBay extends Command {
     System.out.println(x);
     if (camera.isBayFound()){
       
-      drive.arcadeDrive(1.0 , x/(camera.getWidth()));
+      drive.arcadeDrive(0.5 , x/(camera.getWidth()) / 2);
     
     } else {
       double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
@@ -61,12 +61,13 @@ public class DriveToBay extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return OI.getInstance().getDriver().getButton(Xbox.RB).get();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("DriveToBay Finished");
   }
 
   // Called when another command which requires one or more of the same

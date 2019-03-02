@@ -28,7 +28,7 @@ public class HatchMechanismSubsystem extends Subsystem {
   }
 
   public void clampHatch() {
-    clampingSolenoid.set(Value.kForward);
+    clampingSolenoid.set(Value.kReverse);
   }
 
   public void offHatch() {
@@ -36,12 +36,11 @@ public class HatchMechanismSubsystem extends Subsystem {
   }
 
   public void unclampHatch() {
-    clampingSolenoid.set(Value.kReverse);
-
+    clampingSolenoid.set(Value.kForward);
   }
 
   public void extendReleasingPistons() {
-    scoreSolenoid.set(Value.kForward);
+    scoreSolenoid.set(Value.kReverse);
  }
 
   public void scorePistonsOff() {
@@ -49,7 +48,7 @@ public class HatchMechanismSubsystem extends Subsystem {
   }
 
   public void retractReleasingPistons() {
-    scoreSolenoid.set(Value.kReverse);
+    scoreSolenoid.set(Value.kForward);
 
   }
 

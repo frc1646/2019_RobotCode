@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.MoveForward;
 import frc.robot.commands.MoveForwardDistance;
+import frc.robot.commands.ScoreOneHatchAuton;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -108,7 +109,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    new MoveForwardDistance(4).start();
+    Command autoCommand = new ScoreOneHatchAuton();
+    autoCommand.start();
+    
+    
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -117,9 +121,7 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
+    autoCommand.close();
   }
 
   /**
