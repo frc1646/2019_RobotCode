@@ -76,7 +76,7 @@ public class RobotMap {
   //public static final Value CLAMP_VALUE = true;
   //public static final Value RELEASING_VALUE = true;
   public static final int HATCH_EXTEND_A = 4;
-  public static final int HATCH_EXTEND_B = 5
+  public static final int HATCH_EXTEND_B = 5;
 
   //StatusLightsSubsystem
   public static final int BLINKIN_ID = 0;

@@ -41,14 +41,20 @@ public class OI {
   private OI() {
     driver_controller = new Xbox(RobotMap.DRIVER_CONTROLLER_PORT);
     operator_controller = new Xbox(RobotMap.OPERATOR_CONTROLLER_PORT);
+
+    createDriver();
+    createOperator();
   }
 
   public void createDriver() {
-    driver_controller.getButton(Xbox.Y);
   }
 
   public void createOperator() {
-    operator_controller.getButton(Xbox.Y).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.LB).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
+    operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
+    operator_controller.getButton(Xbox.X).whenPressed(new )
+
   }
   public boolean getIntakeButton() {
     return operator_controller.getButton(Xbox.LT).get();
