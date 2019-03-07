@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
+import frc.robot.utils.controller.Xbox;
 
 public class MoveCargoArm extends Command {
 
@@ -30,9 +31,9 @@ public class MoveCargoArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double armPivotPower = OI.getInstance().getY_Left_Op();
+    double armPivotPower = OI.getInstance().getOperator().getAxis(Xbox.RIGHT_VERTICAL);
 
-    if (cargoMechSub.isSwitchPushed() == true && armPivotPower < 0) {
+    if (cargoMechSub.isDownSwitchPressed() == true && armPivotPower < 0) {
       cargoMechSub.setArmPivotPower(0.0);
     } else {
       cargoMechSub.setArmPivotPower(armPivotPower);

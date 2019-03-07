@@ -22,7 +22,7 @@ public class IntakeCargo extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    cargoMech.setIntakeRollerPower(0.9);
+    cargoMech.setIntakeRollerPower(-0.9);
   }
 
   // Called repeatedly when this Command is scheduled to run

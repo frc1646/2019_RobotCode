@@ -14,6 +14,8 @@ import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToHatchTarget;
+import frc.robot.commands.IntakeCargo;
+import frc.robot.commands.MoveCargoArm;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
@@ -51,9 +53,10 @@ public class OI {
 
   public void createOperator() {
     operator_controller.getButton(Xbox.LB).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.RB).whileHeld(new MoveCargoArm());
     operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
     operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
-    operator_controller.getButton(Xbox.X).whenPressed(new )
+    operator_controller.getButton(Xbox.X).whileHeld(new IntakeCargo());
 
   }
   public boolean getIntakeButton() {
