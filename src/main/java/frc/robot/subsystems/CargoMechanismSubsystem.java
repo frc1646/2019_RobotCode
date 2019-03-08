@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.utils.CheesyPID;
@@ -48,7 +49,7 @@ public class CargoMechanismSubsystem extends Subsystem {
     ultra = new Ultrasonic(RobotMap.ULTRA_SENSOR_PING_ID, RobotMap.ULTRA_SENSOR_ECHO_ID);
     ultra.setAutomaticMode(true);
 
-    //upLimitSwitch = new DigitalInput(RobotMap.UP_LIMIT_SWITCH_ID);
+    upLimitSwitch = new DigitalInput(RobotMap.UP_LIMIT_SWITCH_ID);
     downLimitSwitch = new DigitalInput(RobotMap.DOWN_LIMIT_SWITCH_ID);
     
     leftEffectSensor = new Counter(RobotMap.LEFT_EFFECT_SENSOR_ID);
@@ -89,7 +90,7 @@ public class CargoMechanismSubsystem extends Subsystem {
   }
 
   public boolean isDownSwitchPressed() {
-    return downLimitSwitch.get();
+    return !downLimitSwitch.get();
   }
 
 

@@ -60,6 +60,7 @@ public class ChangeCargoAngle extends Command {
 
     SmartDashboard.putNumber("UltraSonic Distance", cargo.getUltrasonicDistance());
     SmartDashboard.putNumber("Encoder Raw Count", cargo.getAvgCount());
+
     //lastTime = Timer.getFPGATimestamp();
   }
 

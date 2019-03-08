@@ -36,13 +36,13 @@ public class RobotMap {
   /* DriveSubsystem */
   public static final int LEFT_TALON = 1;
   public static final int LEFT_VICTOR = 2;
-  public static final int RIGHT_TALON = 3;
-  public static final int RIGHT_VICTOR = 4;   
+  public static final int RIGHT_TALON = 11;
+  public static final int RIGHT_VICTOR = 12;   
 
-  public static final boolean INV_1 = false;
-  public static final boolean INV_2 = false;
-  public static final boolean INV_3 = true;
-  public static final boolean INV_4 = true;
+  public static final boolean L_TALON_INV = true;
+  public static final boolean L_VICT_INV = true;
+  public static final boolean R_TALON_INV = false;
+  public static final boolean R_VICT_INV = false;
 
   public static final int LEFT_ENCODER_A = 1;
   public static final int LEFT_ENCODER_B = 0;

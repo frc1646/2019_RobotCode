@@ -16,7 +16,7 @@ public class GetHatchSequence extends CommandGroup {
    */
   public GetHatchSequence() {
     addSequential(new ClampHatch());
-    addSequential(new WaitCommand(2));
+    //addSequential(new WaitCommand(.2));
     addSequential(new RetractHatch());
     // Add Commands here:
     // e.g. addSequential(new Command1());

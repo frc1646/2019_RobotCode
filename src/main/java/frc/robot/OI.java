@@ -12,11 +12,16 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
+
 import frc.robot.commands.DriveToBall;
+import frc.robot.commands.DriveToBay;
 import frc.robot.commands.DriveToHatchTarget;
-import frc.robot.commands.IntakeCargo;
-import frc.robot.commands.MoveCargoArm;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.RetractHatch;
+import frc.robot.commands.ExtendHatchMech;
+import frc.robot.commands.GetHatchSequence;
+import frc.robot.commands.IntakeCargo;
+import frc.robot.commands.PutHatchOnSequence;
 import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
@@ -49,16 +54,26 @@ public class OI {
   }
 
   public void createDriver() {
+    driver_controller.getButton(Xbox.Y).whenPressed(new ShiftUp());
+    driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
+    driver_controller.getButton(Xbox.RB).whileHeld(new DriveToBay());
   }
 
   public void createOperator() {
-    operator_controller.getButton(Xbox.LB).whileHeld(new ChangeCargoAngle());
-    operator_controller.getButton(Xbox.RB).whileHeld(new MoveCargoArm());
+    operator_controller.getButton(Xbox.Y).whenPressed(new ExtendHatchMech());
+    operator_controller.getButton(Xbox.X).whenPressed(new GetHatchSequence());
+    operator_controller.getButton(Xbox.B).whenPressed(new PutHatchOnSequence());
+    operator_controller.getButton(Xbox.A).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.RB).whileHeld(new IntakeCargo());
+
+    /*
+    operator_controller.getButton(Xbox.LB).whenPressed(new RetractHatch());
+    operator_controller.getButton(Xbox.X).whenPressed(new ExtendHatchMech());
     operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
     operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
-    operator_controller.getButton(Xbox.X).whileHeld(new IntakeCargo());
-
+    */
   }
+
   public boolean getIntakeButton() {
     return operator_controller.getButton(Xbox.LT).get();
   }
@@ -76,7 +91,4 @@ public class OI {
     }
     return instance;
   }
-
-  
-
 }
