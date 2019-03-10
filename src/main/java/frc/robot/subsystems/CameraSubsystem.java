@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSource;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -34,6 +37,11 @@ public class CameraSubsystem extends Subsystem {
   
     bayVisionContour = NetworkTable.getTable("GRIP/bayHatch");
     foundBay = false;
+
+    UsbCamera cam1 = new UsbCamera("main camera", 0);
+
+    cam1.setResolution(480, 480);
+    cam1.setFPS(10);
   }
 
   public boolean isBallFound(){

@@ -86,7 +86,7 @@ public class CargoMechanismSubsystem extends Subsystem {
 
 
   public boolean isUpSwitchPressed() {
-    return upLimitSwitch.get();
+    return !upLimitSwitch.get();
   }
 
   public boolean isDownSwitchPressed() {

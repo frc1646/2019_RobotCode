@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.commands.ClampHatch;
 import frc.robot.commands.CycleDriveMode;
-
+import frc.robot.commands.DebugCommandGroup;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToBay;
 import frc.robot.commands.DriveToHatchTarget;
@@ -21,6 +21,7 @@ import frc.robot.commands.RetractHatch;
 import frc.robot.commands.ExtendHatchMech;
 import frc.robot.commands.GetHatchSequence;
 import frc.robot.commands.IntakeCargo;
+import frc.robot.commands.OuttakeCargo;
 import frc.robot.commands.PutHatchOnSequence;
 import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
@@ -57,14 +58,17 @@ public class OI {
     driver_controller.getButton(Xbox.Y).whenPressed(new ShiftUp());
     driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
     driver_controller.getButton(Xbox.RB).whileHeld(new DriveToBay());
+    driver_controller.getButton(Xbox.B).whenPressed(new DebugCommandGroup());
   }
 
   public void createOperator() {
     operator_controller.getButton(Xbox.Y).whenPressed(new ExtendHatchMech());
-    operator_controller.getButton(Xbox.X).whenPressed(new GetHatchSequence());
-    operator_controller.getButton(Xbox.B).whenPressed(new PutHatchOnSequence());
-    operator_controller.getButton(Xbox.A).whileHeld(new ChangeCargoAngle());
-    operator_controller.getButton(Xbox.RB).whileHeld(new IntakeCargo());
+    operator_controller.getButton(Xbox.A).whenPressed(new RetractHatch());
+    operator_controller.getButton(Xbox.B).whenPressed(new ClampHatch());
+    operator_controller.getButton(Xbox.X).whenPressed(new UnclampHatch());
+    //operator_controller.getButton(Xbox.X).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.RB).whileHeld(new OuttakeCargo());
+    operator_controller.getButton(Xbox.LB).whileHeld(new IntakeCargo());
 
     /*
     operator_controller.getButton(Xbox.LB).whenPressed(new RetractHatch());

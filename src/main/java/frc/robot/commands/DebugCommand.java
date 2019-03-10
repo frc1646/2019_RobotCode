@@ -8,47 +8,44 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.CargoMechanismSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+public class DebugCommand extends Command {
+  private String key;
+  private String name;
+  public DebugCommand(String key, String name) {
+    this.key = key;
+    this.name = name;
 
-
-public class OuttakeCargo extends Command {
-  CargoMechanismSubsystem cargoMech;
-
-  public OuttakeCargo() {
-    requires(cargoMech = CargoMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
-
   protected void initialize() {
-    cargoMech.setIntakeRollerPower(0.9);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    SmartDashboard.putString(key, name);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    cargoMech.setIntakeRollerPower(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

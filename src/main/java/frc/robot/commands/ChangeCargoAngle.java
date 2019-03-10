@@ -36,7 +36,8 @@ public class ChangeCargoAngle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   
+    //System.out.println("changeCargoAngleCommand");
+    SmartDashboard.putBoolean("upperSwitch", cargo.isUpSwitchPressed());
     if (OI.getInstance().getOperator().getButton(Xbox.X).get() && !cargo.isBallIn()) {
       cargo.setIntakeRollerPower(-0.9); //intaking
     } else if (OI.getInstance().getOperator().getButton(Xbox.B).get()) {
@@ -49,13 +50,33 @@ public class ChangeCargoAngle extends Command {
       cargo.resetHallEffectSensors();
     }
 
-    if(OI.getInstance().getOperator().getButton(Xbox.X).get() && cargo.isBallIn() && cargo.getAvgCount() < Constants.CARGO_ARM_MAX_ENCODER_COUNT)  { 
+    double leftYAxis = OI.getInstance().getOperator().getAxis(Xbox.LEFT_VERTICAL);
+    System.out.println(leftYAxis);
+
+    //cargo.setArmPivotPower(leftYAxis);
+
+     if(leftYAxis < -0.25 && !cargo.isDownSwitchPressed()) {
+      cargo.setArmPivotPower(leftYAxis * -1.0);
+    } else if(leftYAxis > 0.25 && !cargo.isUpSwitchPressed()) {
+        cargo.setArmPivotPower(leftYAxis * -1.0);
+    } else if (OI.getInstance().getOperator().getButton(Xbox.X).get() && cargo.isBallIn() && !cargo.isUpSwitchPressed()) {
+      cargo.setArmPivotPower(0.0);
+    } else {
+      cargo.setArmPivotPower(0.0);
+    } 
+    
+    
+
+    /*
+
+    if (OI.getInstance().getOperator().getButton(Xbox.X).get() && cargo.isBallIn() && cargo.getAvgCount() < Constants.CARGO_ARM_MAX_ENCODER_COUNT)  { 
       cargo.setArmPivotPower(-0.9);
     } else if (!cargo.isDownSwitchPressed()) {
-      cargo.setArmPivotPower(OI.getInstance().getOperator().getAxis(Xbox.RIGHT_VERTICAL));
+      cargo.setArmPivotPower(leftYAxis);
     } else {
       cargo.setArmPivotPower(0);
     }
+    */
 
 
     SmartDashboard.putNumber("UltraSonic Distance", cargo.getUltrasonicDistance());
@@ -71,6 +92,8 @@ public class ChangeCargoAngle extends Command {
   }
 
   // Called once after isFinished returns true
+  
+
   @Override
   protected void end() {
     cargo.setArmPivotPower(0);

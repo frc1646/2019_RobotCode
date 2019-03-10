@@ -66,7 +66,7 @@ public class DrivePID extends Command {
     SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
 
     double driveJoy = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
-    double angleJoy = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL); 
+    double angleJoy = -OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL); 
 
     if (driveJoy < 0.05 && driveJoy > -0.05) {
       driveJoy = 0;  
