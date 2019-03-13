@@ -151,9 +151,10 @@ private class DriveSide {
       encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
     } 
      	 
-    public void setPower(double power) { 
-      master.set(ControlMode.PercentOutput, power);
-      slave.set(ControlMode.PercentOutput, power);
+    public void setPower(double power) {
+      //FIXME pls remove cap thx
+      master.set(ControlMode.PercentOutput, power * 0.8);
+      slave.set(ControlMode.PercentOutput, power * 0.8);
     }
 
     public double getEncoderCount() {
