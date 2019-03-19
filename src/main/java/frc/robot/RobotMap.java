@@ -81,6 +81,10 @@ public class RobotMap {
   //StatusLightsSubsystem
   public static final int BLINKIN_ID = 0;
 
+  /* climber solenoid */
+  public static final int CLIMBER_SOLENOID_A = 6;
+  public static final int CLIMBER_SOLENOID_B = 7;
+
   
 
   // For example to map the left and right motors, you could define the

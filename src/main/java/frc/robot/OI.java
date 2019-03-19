@@ -16,7 +16,9 @@ import frc.robot.commands.DebugCommandGroup;
 import frc.robot.commands.DriveToBall;
 import frc.robot.commands.DriveToBay;
 import frc.robot.commands.DriveToHatchTarget;
+import frc.robot.commands.ExtendClimber;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.RetractClimber;
 import frc.robot.commands.RetractHatch;
 import frc.robot.commands.ExtendHatchMech;
 import frc.robot.commands.GetHatchSequence;
@@ -58,7 +60,10 @@ public class OI {
     driver_controller.getButton(Xbox.Y).whenPressed(new ShiftUp());
     driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
     driver_controller.getButton(Xbox.RB).whileHeld(new DriveToBay());
-    driver_controller.getButton(Xbox.B).whenPressed(new DebugCommandGroup());
+    //driver_controller.getButton(Xbox.B).whenPressed(new DebugCommandGroup());
+
+    driver_controller.getButton(Xbox.X).whenPressed(new ExtendClimber());
+    driver_controller.getButton(Xbox.B).whenPressed(new RetractClimber());
   }
 
   public void createOperator() {

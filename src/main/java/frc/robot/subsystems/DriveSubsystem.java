@@ -40,6 +40,7 @@ public class DriveSubsystem extends Subsystem {
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
   private DoubleSolenoid shifter;
+  private DoubleSolenoid climber;
 
   private boolean highGear;
   
@@ -56,6 +57,8 @@ public class DriveSubsystem extends Subsystem {
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
     shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
+
+    climber = new DoubleSolenoid(RobotMap.CLIMBER_SOLENOID_A, RobotMap.CLIMBER_SOLENOID_B);
   } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
@@ -127,6 +130,18 @@ public boolean isHighGear() {
 
 public void shiftOff() {
   shifter.set(Value.kOff);
+}
+
+public void extendClimb() {
+  climber.set(Value.kForward);
+}
+
+public void retractClimb() {
+  climber.set(Value.kReverse);
+}
+
+public void turnClimbOff() {
+  climber.set(Value.kOff);
 }
 
 

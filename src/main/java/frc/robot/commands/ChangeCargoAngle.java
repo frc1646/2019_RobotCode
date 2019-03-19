@@ -38,7 +38,7 @@ public class ChangeCargoAngle extends Command {
   protected void execute() {
     //System.out.println("changeCargoAngleCommand");
     SmartDashboard.putBoolean("upperSwitch", cargo.isUpSwitchPressed());
-    if (OI.getInstance().getOperator().getButton(Xbox.X).get() && !cargo.isBallIn()) {
+    if (OI.getInstance().getOperator().getButton(Xbox.START).get() && !cargo.isBallIn()) {
       cargo.setIntakeRollerPower(-0.9); //intaking
     } else if (OI.getInstance().getOperator().getButton(Xbox.B).get()) {
       cargo.setIntakeRollerPower(0.9); //outaking
