@@ -154,7 +154,7 @@ private class DriveSide {
                      boolean inv1, boolean inv2, 
                      int encoder_A, int encoder_B,
                      boolean encoder_inv) {     
-      master = new TalonSRX(port1); 
+      master = new TalonSRX(port1);
       slave = new VictorSPX(port2); 
      		 
       master.setInverted(inv1); 

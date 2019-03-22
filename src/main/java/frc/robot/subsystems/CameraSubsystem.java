@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSource;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.cscore.VideoException;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -42,6 +42,11 @@ public class CameraSubsystem extends Subsystem {
 
     cam1.setResolution(480, 480);
     cam1.setFPS(10);
+    try {
+      CameraServer.getInstance().startAutomaticCapture(cam1);
+    } catch (VideoException e) {
+      e.printStackTrace();
+    }
   }
 
   public boolean isBallFound(){

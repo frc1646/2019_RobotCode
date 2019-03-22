@@ -57,9 +57,9 @@ public class DrivePID extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    a_vel = (-drive.getGyro().getRawGyroZ() * 2 * (Math.PI / 360)) * 0.2 + 0.8 * a_vel;
+    a_vel = (drive.getGyro().getRawGyroZ() * 2 * (Math.PI / 360)) * 0.2 + 0.8 * a_vel;
     double dt = Timer.getFPGATimestamp() - lastTime;
-    double d_vel = (drive.getDistance() - lastPos) / dt;    
+    double d_vel = 0;//(drive.getDistance() - lastPos) / dt;
 
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);

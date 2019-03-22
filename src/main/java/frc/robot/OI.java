@@ -67,11 +67,13 @@ public class OI {
   }
 
   public void createOperator() {
-    operator_controller.getButton(Xbox.B).whenPressed(new ExtendHatchMech());
-    operator_controller.getButton(Xbox.X).whenPressed(new RetractHatch());
+    //operator_controller.getButton(Xbox.B).whenPressed(new ExtendHatchMech());
+    //operator_controller.getButton(Xbox.X).whenPressed(new RetractHatch());
     operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
     operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
     //operator_controller.getButton(Xbox.X).whileHeld(new ChangeCargoAngle());
+    operator_controller.getButton(Xbox.X).whenPressed(new GetHatchSequence());
+    operator_controller.getButton(Xbox.B).whenPressed(new PutHatchOnSequence());
     operator_controller.getButton(Xbox.RB).whileHeld(new OuttakeCargo());
     operator_controller.getButton(Xbox.LB).whileHeld(new IntakeCargo());
 

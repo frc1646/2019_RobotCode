@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -15,7 +18,6 @@ import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -27,9 +29,9 @@ import frc.robot.utils.CheesyPID;
  */
 public class CargoMechanismSubsystem extends Subsystem {
 
-  private VictorSP leftArmMotor;
-  private VictorSP rightArmMotor;
-  private VictorSP intakeMotor;
+  private VictorSPX leftArmMotor;
+  private VictorSPX rightArmMotor;
+  private VictorSPX intakeMotor;
   private Ultrasonic ultra;
   private DigitalInput upLimitSwitch, downLimitSwitch;
   private Counter leftEffectSensor, rightEffectSensor;
@@ -38,9 +40,9 @@ public class CargoMechanismSubsystem extends Subsystem {
   public static CargoMechanismSubsystem instance;
 
   private CargoMechanismSubsystem() {
-    leftArmMotor = new VictorSP(RobotMap.LEFT_CARGO_ARM_MOTOR_ID);
-    rightArmMotor = new VictorSP(RobotMap.RIGHT_CARGO_ARM_MOTOR_ID);
-    intakeMotor = new VictorSP(RobotMap.INTAKE_MOTOR_ID);
+    leftArmMotor = new VictorSPX(RobotMap.LEFT_CARGO_ARM_MOTOR_ID);
+    rightArmMotor = new VictorSPX(RobotMap.RIGHT_CARGO_ARM_MOTOR_ID);
+    intakeMotor = new VictorSPX(RobotMap.INTAKE_MOTOR_ID);
 
     leftArmMotor.setInverted(RobotMap.LEFT_CARGO_MOTOR_INV);
     rightArmMotor.setInverted(RobotMap.RIGHT_CARGO_MOTOR_INV);
@@ -96,12 +98,12 @@ public class CargoMechanismSubsystem extends Subsystem {
 
 
   public void setIntakeRollerPower(double power) {
-    intakeMotor.set(power);
+    intakeMotor.set(ControlMode.PercentOutput, power);
   }
 
   public void setArmPivotPower(double power) {
-    rightArmMotor.set(power);
-    leftArmMotor.set(power);
+    rightArmMotor.set(ControlMode.PercentOutput, power);
+    leftArmMotor.set(ControlMode.PercentOutput, power);
     System.out.println("Setting power to " + power);
   }
   // Put methods for controlling this subsystem

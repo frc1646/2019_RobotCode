@@ -44,21 +44,21 @@ public class RobotMap {
   public static final boolean R_TALON_INV = false;
   public static final boolean R_VICT_INV = false;
 
-  public static final int LEFT_ENCODER_A = 1;
-  public static final int LEFT_ENCODER_B = 0;
-  public static final int RIGHT_ENCODER_A = 8;
-  public static final int RIGHT_ENCODER_B = 9;
+  public static final int LEFT_ENCODER_A = 0;
+  public static final int LEFT_ENCODER_B = 1;
+  public static final int RIGHT_ENCODER_A = 2;
+  public static final int RIGHT_ENCODER_B = 3;
 
   /* PneumaticSubsystem */
   public static final int SHIFTER_PORT_A = 0;
   public static final int SHIFTER_PORT_B = 1;
 
   //CargoMechanismSubsystem
-  public static final int LEFT_CARGO_ARM_MOTOR_ID =  7;
+  public static final int LEFT_CARGO_ARM_MOTOR_ID =  21;
   public static final boolean LEFT_CARGO_MOTOR_INV = true;
-  public static final int RIGHT_CARGO_ARM_MOTOR_ID = 8;
+  public static final int RIGHT_CARGO_ARM_MOTOR_ID = 22;
   public static final boolean RIGHT_CARGO_MOTOR_INV = false;
-  public static final int INTAKE_MOTOR_ID = 9;
+  public static final int INTAKE_MOTOR_ID = 31;
   public static final boolean INTAKE_MOTOR_INV = false;
 
   public static final int ULTRA_SENSOR_PING_ID = 6; // sends ping
@@ -67,8 +67,8 @@ public class RobotMap {
   public static final int UP_LIMIT_SWITCH_ID = 7;
   public static final int DOWN_LIMIT_SWITCH_ID = 4;
 
-  public static final int LEFT_EFFECT_SENSOR_ID = 2;
-  public static final int RIGHT_EFFECT_SENSOR_ID = 3;
+  public static final int LEFT_EFFECT_SENSOR_ID = 8;
+  public static final int RIGHT_EFFECT_SENSOR_ID = 9;
 
   //HatchMechanismSubsystem
   public static final int RELEASING_HATCH_SOLENOID_ID = 2;
