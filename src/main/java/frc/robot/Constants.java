@@ -27,8 +27,8 @@ public class Constants {
     public static final double DRIVE_VEL_F = 1 / DRIVE_MAX_VEL;
     
     public static final double ANGLE_VEL_P = 0.1;
-    public static final double ANGLE_VEL_I = 0.01;
-    public static final double ANGLE_VEL_D = 0;
+    public static final double ANGLE_VEL_I = 0.001;
+    public static final double ANGLE_VEL_D = 0.01;
     public static final double ANGLE_VEL_F = 1 / ANGLE_MAX_VEL;
 
 

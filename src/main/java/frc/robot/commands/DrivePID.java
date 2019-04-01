@@ -64,6 +64,8 @@ public class DrivePID extends Command {
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
+  //                  SmartDashboard.putNumber("left vel", drive.getLeftSpeed());
+   // SmartDashboard.putNumber("right vel", drive.getRightSpeed());
 
     double driveJoy = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
     double angleJoy = -OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL); 

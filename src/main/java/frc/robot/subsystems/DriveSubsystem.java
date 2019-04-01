@@ -62,8 +62,8 @@ public class DriveSubsystem extends Subsystem {
   } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
- 		leftSide.setPower(leftPower); 
- 		rightSide.setPower(rightPower); 
+ 		leftSide.setPower(leftPower * 0.85); 
+ 		rightSide.setPower(rightPower * 0.85);
  	} 
    
   public void resetEncoder() {
@@ -143,8 +143,12 @@ public void retractClimb() {
 public void turnClimbOff() {
   climber.set(Value.kOff);
 }
-
-
+public double getLeftSpeed() {
+  return leftSide.getSpeed();
+}
+public double getRightSpeed() {
+  return rightSide.getSpeed();
+}
 private class DriveSide { 
     private TalonSRX master;  
     private VictorSPX slave;
@@ -168,8 +172,8 @@ private class DriveSide {
      	 
     public void setPower(double power) {
       //FIXME pls remove cap thx
-      master.set(ControlMode.PercentOutput, power * 0.8);
-      slave.set(ControlMode.PercentOutput, power * 0.8);
+      master.set(ControlMode.PercentOutput, power);
+      slave.set(ControlMode.PercentOutput, power);
     }
 
     public double getEncoderCount() {
@@ -180,6 +184,9 @@ private class DriveSide {
       encoder.reset();
     }
 
+    public double getSpeed() {
+      return encoder.getRate();
+    }
     public double getDistance() {
       return encoder.getDistance();
     }

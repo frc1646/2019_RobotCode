@@ -38,12 +38,12 @@ public class CameraSubsystem extends Subsystem {
     bayVisionContour = NetworkTable.getTable("GRIP/bayHatch");
     foundBay = false;
 
-    UsbCamera cam1 = new UsbCamera("main camera", 0);
+    //UsbCamera cam1 = new UsbCamera("main camera", 0);
 
-    cam1.setResolution(480, 480);
-    cam1.setFPS(10);
+    //cam1.setResolution(480, 480);
+    //cam1.setFPS(10);
     try {
-      CameraServer.getInstance().startAutomaticCapture(cam1);
+      //CameraServer.getInstance().startAutomaticCapture(1);
     } catch (VideoException e) {
       e.printStackTrace();
     }
