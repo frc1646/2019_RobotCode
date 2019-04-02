@@ -58,7 +58,7 @@ public class DrivePID extends Command {
   protected void execute() {
     a_vel = (-drive.getGyro().getRawGyroZ() * 2 * (Math.PI / 360)) * 0.2 + 0.8 * a_vel;
     double dt = Timer.getFPGATimestamp() - lastTime;
-    double d_vel = (drive.getDistance() - lastPos) / dt;    
+    double d_vel = drive.getSpeed();    
 
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
@@ -80,7 +80,8 @@ public class DrivePID extends Command {
     //d_pid.setSetpoint(0);
     //a_pid.setSetpoint(0);
     //SmartDashboard.putNumber("driveSetpoint", driveJoy * Constants.DRIVE_MAX_VEL);
-  
+    
+
     SmartDashboard.putNumber("a_error", a_pid.getError());
     SmartDashboard.putNumber("f_output", d_pid.getSetpoint());
   

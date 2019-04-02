@@ -18,8 +18,8 @@ public class Constants {
     public static final double DRIVE_MAX_VEL = 5.5; // feet per second
     public static final double ANGLE_MAX_VEL = 4.1; // rad per second
 
-    public static final double LOW_AUTOSHIFT = 7;
-    public static final double HIGH_AUTOSHIFT = 25;
+    public static final double LOW_AUTOSHIFT = 5;
+    public static final double HIGH_AUTOSHIFT = 9.5;
 
     public static final double DRIVE_VEL_P = -0.01;//0.3;
     public static final double DRIVE_VEL_I = 0;

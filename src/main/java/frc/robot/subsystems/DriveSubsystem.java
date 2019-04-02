@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.OI;
@@ -40,7 +39,7 @@ public class DriveSubsystem extends Subsystem {
   private AHRS gyro;
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
-  private DoubleSolenoid shifter;
+
 
   private Counter testCounter;
 
@@ -59,7 +58,6 @@ public class DriveSubsystem extends Subsystem {
                               RobotMap.INV_3, RobotMap.INV_4,
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
-    shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
   } 
   
   public double getRotations() {
@@ -98,7 +96,7 @@ public class DriveSubsystem extends Subsystem {
   public double getDistance() {
     return (getDistanceLeftSide() + getDistanceRightSide()) / 2;
   }
-  
+
   public void initDefaultCommand() {
     setDefaultCommand(new DrivePID()); 
   } 
@@ -119,24 +117,13 @@ public static DriveSubsystem getInstance() {
 } 
 
 
-public void shiftUp() {
-  shifter.set(Value.kForward);
-  highGear = true;
-}
-
-public void shiftDown() {
-  shifter.set(Value.kReverse);
-  highGear = false;
-}
-
 public boolean isHighGear() {
   return highGear;
 }
 
-public void shiftOff() {
-  shifter.set(Value.kOff);
+public double getSpeed() {
+  return (leftSide.getSpeed() + rightSide.getSpeed()) / 2;
 }
-
 
 private class DriveSide { 
     private TalonSRX master;  
@@ -157,11 +144,16 @@ private class DriveSide {
 
       encoder = new Encoder(encoder_A, encoder_B);
       encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
+    
     } 
      	 
     public void setPower(double power) { 
       master.set(ControlMode.PercentOutput, power);
       slave.set(ControlMode.PercentOutput, power);
+    }
+
+    public double getSpeed() {
+      return encoder.getRate();
     }
 
     public double getEncoderCount() {
