@@ -39,7 +39,6 @@ public class DriveSubsystem extends Subsystem {
   private AHRS gyro;
 	private DriveSide leftSide, rightSide; 
  	private static DriveSubsystem instance; 
-  private DoubleSolenoid shifter;
   private DoubleSolenoid climber;
 
   private boolean highGear;
@@ -56,7 +55,6 @@ public class DriveSubsystem extends Subsystem {
                               RobotMap.R_TALON_INV, RobotMap.R_VICT_INV,
                               RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B,
                               RobotMap.ENCODER_INV_2); 
-    shifter = new DoubleSolenoid(RobotMap.SHIFTER_PORT_A, RobotMap.SHIFTER_PORT_B);
 
     climber = new DoubleSolenoid(RobotMap.CLIMBER_SOLENOID_A, RobotMap.CLIMBER_SOLENOID_B);
   } 
@@ -114,23 +112,6 @@ public static DriveSubsystem getInstance() {
 } 
 
 
-public void shiftUp() {
-  shifter.set(Value.kForward);
-  highGear = true;
-}
-
-public void shiftDown() {
-  shifter.set(Value.kReverse);
-  highGear = false;
-}
-
-public boolean isHighGear() {
-  return highGear;
-}
-
-public void shiftOff() {
-  shifter.set(Value.kOff);
-}
 
 public void extendClimb() {
   climber.set(Value.kForward);

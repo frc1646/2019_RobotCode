@@ -24,6 +24,7 @@ import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
+import frc.robot.subsystems.ShiftingSubsystem;
 import frc.robot.subsystems.StatusSubsystem;
 
 /**
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   public static CameraSubsystem camera;
   public static StatusSubsystem statusLights;
   public static CargoMechanismSubsystem cargoSubsystem;
+  public static ShiftingSubsystem shiftSubsystem;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
     pneumatics = PneumaticSubsystem.getInstance();
     statusLights = StatusSubsystem.getInstance();
     cargoSubsystem = CargoMechanismSubsystem.getInstance();
+    shiftSubsystem = ShiftingSubsystem.getInstance();
     //camera = CameraSubsystem.getInstance();
 
     // chooser.addOption("My Auto", new MyAutoCommand());

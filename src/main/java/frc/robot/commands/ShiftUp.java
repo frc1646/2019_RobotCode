@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
+import frc.robot.subsystems.ShiftingSubsystem;
 
 public class ShiftUp extends Command {
 
   private DriveSubsystem drive;
+  private ShiftingSubsystem shifter;
+
   public ShiftUp() {
-    requires(drive = DriveSubsystem.getInstance());
+    requires(shifter = ShiftingSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -24,7 +27,7 @@ public class ShiftUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    drive.shiftUp();
+    shifter.shiftUp();
   }
 
   // Called repeatedly when this Command is scheduled to run

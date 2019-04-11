@@ -22,6 +22,7 @@ public class StatusSubsystem extends Subsystem {
 
   private Spark statusLights;
   private static StatusSubsystem instance;
+  private boolean desiredGear;
 
   public StatusSubsystem() {
     statusLights = new Spark(RobotMap.BLINKIN_ID);
@@ -32,6 +33,16 @@ public class StatusSubsystem extends Subsystem {
    */
   public void setStatusLights(double statusLightsValue) {
     statusLights.set(statusLightsValue);
+  }
+
+  
+  public void setDesiredGear(boolean desiredGear) {
+    this.desiredGear = desiredGear;
+
+  }
+
+  public boolean getDesiredGear() {
+    return desiredGear;
   }
 
  // public double getMatchTime() {

@@ -29,7 +29,6 @@ import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
-import frc.robot.commands.ToggleShift;
 import frc.robot.commands.UnclampHatch;
 import frc.robot.utils.controller.Logitech;
 import frc.robot.utils.controller.Xbox;
@@ -59,7 +58,7 @@ public class OI {
   public void createDriver() {
     driver_controller.getButton(Xbox.Y).whenPressed(new ShiftUp());
     driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
-    driver_controller.getButton(Xbox.RB).whileHeld(new DriveToBay());
+    driver_controller.getButton(Xbox.LB).whileHeld(new DriveToBay());
     //driver_controller.getButton(Xbox.B).whenPressed(new DebugCommandGroup());
 
     driver_controller.getButton(Xbox.X).whenPressed(new ExtendClimber());
@@ -87,6 +86,10 @@ public class OI {
 
   public boolean getIntakeButton() {
     return operator_controller.getButton(Xbox.LT).get();
+  }
+
+  public boolean getShiftButton() {
+    return driver_controller.getButton(Xbox.RB).get();
   }
 
   public Xbox getDriver() {
