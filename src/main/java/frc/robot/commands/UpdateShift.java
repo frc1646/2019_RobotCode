@@ -28,6 +28,7 @@ public class UpdateShift extends Command {
         
     }
 
+    //FIXME
     @Override
     protected void execute() {
         status.setDesiredGear(!oi.getShiftButton());
