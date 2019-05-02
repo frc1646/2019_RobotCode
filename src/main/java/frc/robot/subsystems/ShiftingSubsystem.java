@@ -48,7 +48,7 @@ public void shiftOff() {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new UpdateShift());
+    //setDefaultCommand(new UpdateShift());
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
