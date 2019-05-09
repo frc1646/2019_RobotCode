@@ -60,29 +60,20 @@ public class OI {
     driver_controller.getButton(Xbox.Y).whenPressed(new ShiftUp());
     driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
     driver_controller.getButton(Xbox.LB).whileHeld(new DriveToBay());
-    //driver_controller.getButton(Xbox.B).whenPressed(new DebugCommandGroup());
+    
 
     driver_controller.getButton(Xbox.X).whenPressed(new ExtendClimber());
     driver_controller.getButton(Xbox.B).whenPressed(new RetractClimber());
   }
 
   public void createOperator() {
-    //operator_controller.getButton(Xbox.B).whenPressed(new ExtendHatchMech());
-    //operator_controller.getButton(Xbox.X).whenPressed(new RetractHatch());
     operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
     operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
-    //operator_controller.getButton(Xbox.X).whileHeld(new ChangeCargoAngle());
     operator_controller.getButton(Xbox.X).whileHeld(new ExtendedStartGrabHatch());
     operator_controller.getButton(Xbox.B).whenPressed(new PutHatchOnSequence());
     operator_controller.getButton(Xbox.RB).whileHeld(new OuttakeCargo());
     operator_controller.getButton(Xbox.LB).whileHeld(new IntakeCargo());
-//remove this comment, for commit example
-    /*
-    operator_controller.getButton(Xbox.LB).whenPressed(new RetractHatch());
-    operator_controller.getButton(Xbox.X).whenPressed(new ExtendHatchMech());
-    operator_controller.getButton(Xbox.Y).whenPressed(new ClampHatch());
-    operator_controller.getButton(Xbox.A).whenPressed(new UnclampHatch());
-    */
+
   }
 
   public boolean getIntakeButton() {

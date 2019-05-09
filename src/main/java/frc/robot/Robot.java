@@ -22,7 +22,6 @@ import frc.robot.commands.MoveForwardDistance;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShiftingSubsystem;
 import frc.robot.subsystems.StatusSubsystem;
@@ -37,7 +36,6 @@ import frc.robot.subsystems.StatusSubsystem;
 public class Robot extends TimedRobot {
   
   public static OI m_oi;
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static DriveSubsystem driveSubsystem;
   public static PneumaticSubsystem pneumatics;
   public static CameraSubsystem camera;

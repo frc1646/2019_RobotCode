@@ -60,6 +60,7 @@ public class DriveSubsystem extends Subsystem {
   } 
  	 
  	public void setSidePower(double leftPower, double rightPower) { 
+     //TODO: determine if this needs to be deleted
  		leftSide.setPower(leftPower * 0.85); 
  		rightSide.setPower(rightPower * 0.85);
  	} 
@@ -152,7 +153,6 @@ private class DriveSide {
     } 
      	 
     public void setPower(double power) {
-      //FIXME pls remove cap thx
       master.set(ControlMode.PercentOutput, power);
       slave.set(ControlMode.PercentOutput, power);
     }
