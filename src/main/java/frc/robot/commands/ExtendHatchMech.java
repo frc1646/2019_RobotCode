@@ -28,7 +28,7 @@ public class ExtendHatchMech extends Command {
   protected void initialize() {
     endTime = Timer.getFPGATimestamp() + 0.1;
     //hatchSub.unclampHatch();
-    hatchSub.extendReleasingPistons();
+    hatchSub.extendVertPistSolenoid();
   }
 
 
@@ -47,7 +47,7 @@ public class ExtendHatchMech extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.scorePistonsOff();
+    hatchSub.closeHorizSolenoid();
     //hatchSub.retractReleasingPistons();
   }
 

@@ -25,8 +25,8 @@ public class ScoreHatch extends Command {
   @Override
   protected void initialize() {
 
-    hatchSub.unclampHatch();
-    hatchSub.extendReleasingPistons();
+    hatchSub.extendVertPistSolenoid();
+    hatchSub.extendVertPistSolenoid();
   }
 
 
@@ -45,7 +45,7 @@ public class ScoreHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.retractReleasingPistons();
+    hatchSub.retractVertPistSolenoid();
   }
 
   // Called when another command which requires one or more of the same

@@ -27,7 +27,7 @@ public class RetractHatch extends Command {
   protected void initialize() {
     startTime = Timer.getFPGATimestamp();
    // hatch.clampHatch();
-    hatch.retractReleasingPistons();
+    hatch.retractVertPistSolenoid();
     endTime = startTime + 0.1;
   }
 
@@ -46,7 +46,7 @@ public class RetractHatch extends Command {
   @Override
   protected void end() {
     System.out.println("Retract Finished");
-    hatch.scorePistonsOff();
+    hatch.closeHorizSolenoid();
   }
 
   // Called when another command which requires one or more of the same

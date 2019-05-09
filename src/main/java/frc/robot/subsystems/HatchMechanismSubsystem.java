@@ -18,57 +18,50 @@ import frc.robot.RobotMap;
  */
 public class HatchMechanismSubsystem extends Subsystem {
 
-  private DoubleSolenoid clampingSolenoid, scoreSolenoid;
+  private DoubleSolenoid VertPistSolenoid, horizPistSolenoid;
   private static HatchMechanismSubsystem instance;
   //This is where we allocate the space for the Solenoids used later
 
   private HatchMechanismSubsystem() {
-    clampingSolenoid = new DoubleSolenoid(RobotMap.RELEASING_HATCH_SOLENOID_ID, RobotMap.CLAMPING_HATCH_SOLENOID_ID);
-    scoreSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_A, RobotMap.HATCH_EXTEND_B);
+    VertPistSolenoid = new DoubleSolenoid(RobotMap.RELEASING_HATCH_SOLENOID_ID, RobotMap.CLAMPING_HATCH_SOLENOID_ID);
+    horizPistSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_A, RobotMap.HATCH_EXTEND_B);
   }
 
-  public void clampHatch() {
-    clampingSolenoid.set(Value.kReverse);
+  public void retractVertPistSolenoid() {
+    VertPistSolenoid.set(Value.kReverse);
   }
 
-  public void offHatch() {
-    clampingSolenoid.set(Value.kOff);
+  public void closeVertHatchSolenoid() {
+    //closes both solenoid valves for vertical solnoid
+    VertPistSolenoid.set(Value.kOff);
+  }
+  
+  public void extendVertPistSolenoid() {
+    VertPistSolenoid.set(Value.kForward);
   }
 
-  public void unclampHatch() {
-    clampingSolenoid.set(Value.kForward);
-  }
-
-  public void extendReleasingPistons() {
-    scoreSolenoid.set(Value.kReverse);
+  public void extendHorizPistSolenoid() {
+    horizPistSolenoid.set(Value.kReverse);
  }
 
-  public void scorePistonsOff() {
-    scoreSolenoid.set(Value.kOff);
+  public void closeHorizSolenoid() {
+    //closes both solenoid valves for horizontal solnoid
+    horizPistSolenoid.set(Value.kOff);
   }
 
-  public void retractReleasingPistons() {
-    scoreSolenoid.set(Value.kForward);
+  public void retractHorizSolenoid() {
+    horizPistSolenoid.set(Value.kForward);
 
   }
 
-  public boolean hasHatch() {
-    return false;
-  }
-  // change this later!
-
+  
   public static HatchMechanismSubsystem getInstance() {
     if (instance == null) {
       instance = new HatchMechanismSubsystem();
-
     }
-
     return instance;
-
   } 
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
