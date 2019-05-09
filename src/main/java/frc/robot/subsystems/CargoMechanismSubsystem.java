@@ -35,7 +35,7 @@ public class CargoMechanismSubsystem extends Subsystem {
   private Ultrasonic ultra;
   private DigitalInput upLimitSwitch, downLimitSwitch;
   private Counter leftEffectSensor, rightEffectSensor;
-  //private Encoder cargoEncoder;
+  
 
   public static CargoMechanismSubsystem instance;
 
@@ -56,8 +56,6 @@ public class CargoMechanismSubsystem extends Subsystem {
     
     leftEffectSensor = new Counter(RobotMap.LEFT_EFFECT_SENSOR_ID);
     rightEffectSensor = new Counter(RobotMap.RIGHT_EFFECT_SENSOR_ID);
-
-    //cargoEncoder = new Encoder(RobotMap.LEFT_EFFECT_SENSOR_ID, RobotMap.RIGHT_EFFECT_SENSOR_ID);
   }
 
   public static CargoMechanismSubsystem getInstance() {
