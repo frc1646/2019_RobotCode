@@ -68,8 +68,9 @@ public class CargoMechanismSubsystem extends Subsystem {
   }
 
   public double getAvgCount() {
+    //HallEffect sensor counts rotations of motor
     return rightEffectSensor.get();
-    //return cargoEncoder.getRaw();
+   
   }
 
   public void resetHallEffectSensors() {
@@ -82,7 +83,7 @@ public class CargoMechanismSubsystem extends Subsystem {
   }
 
   public double getUltrasonicDistance() {
-    System.out.println("UltraSonic Reading:" + ultra.getRangeInches());
+    //Uses ultrasonic sensor to see distance from ball
     return ultra.getRangeInches();
   }
 
@@ -102,12 +103,11 @@ public class CargoMechanismSubsystem extends Subsystem {
   }
 
   public void setArmPivotPower(double power) {
+    //sets motor power
     rightArmMotor.set(ControlMode.PercentOutput, power);
     leftArmMotor.set(ControlMode.PercentOutput, power);
-    System.out.println("Setting power to " + power);
   }
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  
 
   @Override
   public void initDefaultCommand() {
