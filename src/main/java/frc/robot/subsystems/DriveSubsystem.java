@@ -149,8 +149,9 @@ private class DriveSide {
       master.setNeutralMode(NeutralMode.Brake);
 
       encoder = new Encoder(encoder_A, encoder_B);
-      encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
-    } 
+      // encoder.setDistancePerPulse(Constants.FEET_PER_COUNT);
+      encoder.setDistancePerPulse(1 / Constants.COUNTS_PER_REV);
+    }
      	 
     public void setPower(double power) {
       master.set(ControlMode.PercentOutput, power);

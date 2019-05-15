@@ -13,6 +13,8 @@ package frc.robot;
 public class Constants {
 
     public static final double FEET_PER_COUNT = Math.PI / 1024;
+
+    public static final double COUNTS_PER_REV = 512;
     //shift high much early than it already is
     //do not shift when there is no joystick input
     public static final double DRIVE_MAX_VEL = 5.5; // feet per second

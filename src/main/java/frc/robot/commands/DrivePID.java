@@ -61,6 +61,9 @@ public class DrivePID extends Command {
     double dt = Timer.getFPGATimestamp() - lastTime;
     double d_vel = 0;//(drive.getDistance() - lastPos) / dt;
 
+    SmartDashboard.putNumber("left encoder", drive.getDistanceLeftSide());
+    SmartDashboard.putNumber("right encoder", drive.getDistanceRightSide());
+
     SmartDashboard.putNumber("d_vel", d_vel);
     SmartDashboard.putNumber("a_vel", a_vel);
     SmartDashboard.putNumber("gyro angle", drive.getGyro().getAngle());
