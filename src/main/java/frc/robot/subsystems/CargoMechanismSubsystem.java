@@ -35,6 +35,11 @@ public class CargoMechanismSubsystem extends Subsystem {
   private Ultrasonic ultra;
   private DigitalInput upLimitSwitch, downLimitSwitch;
   private Counter leftEffectSensor, rightEffectSensor;
+  private ArmState targetArmState =  ArmState.UP;
+
+  public enum ArmState {
+    DOWN, UP, MANUAL
+  }
   
 
   public static CargoMechanismSubsystem instance;
@@ -63,6 +68,14 @@ public class CargoMechanismSubsystem extends Subsystem {
       instance = new CargoMechanismSubsystem();
     }
     return instance;
+  }
+
+  public ArmState getTargetArmState() {
+    return targetArmState;
+  }
+
+  public void setArmState(ArmState newArmState){
+    targetArmState = newArmState;
   }
 
   public double getAvgCount() {
