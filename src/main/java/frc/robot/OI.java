@@ -31,6 +31,8 @@ import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
 import frc.robot.commands.UnclampHatch;
+import frc.robot.commands.cargomech.SetArmState;
+import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.utils.controller.Logitech;
 import frc.robot.utils.controller.Xbox;
 
@@ -73,7 +75,9 @@ public class OI {
     operator_controller.getButton(Xbox.B).whenPressed(new PutHatchOnSequence());
     operator_controller.getButton(Xbox.RB).whileHeld(new OuttakeCargo());
     operator_controller.getButton(Xbox.LB).whileHeld(new IntakeCargo());
-
+    operator_controller.getDPad(Xbox.UP).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.UP));
+    operator_controller.getDPad(Xbox.DOWN).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.DOWN));
+    operator_controller.getDPad(Xbox.LEFT).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.MANUAL));
   }
 
   public boolean getIntakeButton() {
@@ -84,6 +88,9 @@ public class OI {
     return driver_controller.getButton(Xbox.RB).get();
   }
 
+  public double getCargoManualArmPower() {
+    return operator_controller.getAxis(Xbox.LEFT_VERTICAL);
+  }
   public Xbox getDriver() {
     return driver_controller;
   }

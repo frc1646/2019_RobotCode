@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ChangeCargoAngle;
+import frc.robot.commands.cargomech.UpdateArm;
 import frc.robot.utils.CheesyPID;
 
 /**
@@ -35,7 +36,7 @@ public class CargoMechanismSubsystem extends Subsystem {
   private Ultrasonic ultra;
   private DigitalInput upLimitSwitch, downLimitSwitch;
   private Counter leftEffectSensor, rightEffectSensor;
-  private ArmState targetArmState =  ArmState.UP;
+  private ArmState targetArmState =  ArmState.MANUAL;
 
   public enum ArmState {
     DOWN, UP, MANUAL
@@ -115,14 +116,14 @@ public class CargoMechanismSubsystem extends Subsystem {
 
   public void setArmPivotPower(double power) {
     //sets motor power
-    rightArmMotor.set(ControlMode.PercentOutput, power);
-    leftArmMotor.set(ControlMode.PercentOutput, power);
+    rightArmMotor.set(ControlMode.PercentOutput, -power);
+    leftArmMotor.set(ControlMode.PercentOutput, -power);
   }
   
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ChangeCargoAngle());
+    setDefaultCommand(new UpdateArm());
   }
 
 

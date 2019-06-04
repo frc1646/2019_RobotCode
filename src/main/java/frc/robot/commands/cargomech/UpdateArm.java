@@ -8,6 +8,8 @@
 package frc.robot.commands.cargomech;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.CargoMechanismSubsystem.ArmState;
 
@@ -30,9 +32,12 @@ public class UpdateArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    SmartDashboard.putString("cargoState",cargoMech.getTargetArmState().toString());
+    SmartDashboard.putBoolean("upLimitSwitch", cargoMech.isUpSwitchPressed());
+    SmartDashboard.putBoolean("downLimitSwitch", cargoMech.isDownSwitchPressed());
    switch(cargoMech.getTargetArmState()) {
      case UP:
-      if(cargoMech.isUpSwitchPressed()){
+      if (cargoMech.isUpSwitchPressed()){
         cargoMech.setArmPivotPower(0.0);
       } else {
         cargoMech.setArmPivotPower(0.9);
@@ -40,7 +45,7 @@ public class UpdateArm extends Command {
       break;
 
      case DOWN:
-        if(cargoMech.isDownSwitchPressed()) {
+        if (cargoMech.isDownSwitchPressed()) {
           cargoMech.setArmPivotPower(0.0);
         } else {
           cargoMech.setArmPivotPower(-0.9);
@@ -48,6 +53,23 @@ public class UpdateArm extends Command {
       break;
 
      case MANUAL:
+        double armPower = OI.getInstance().getCargoManualArmPower();
+        if (armPower > 0) {
+          if (cargoMech.isUpSwitchPressed()) {
+              cargoMech.setArmPivotPower(0.0);
+          } else {
+            cargoMech.setArmPivotPower(armPower);
+          } 
+        }
+        else { 
+         
+          if (cargoMech.isDownSwitchPressed()) {
+              cargoMech.setArmPivotPower(0.0);
+          } else {
+            cargoMech.setArmPivotPower(armPower);
+          } 
+          
+        }
 
       break;
    }
