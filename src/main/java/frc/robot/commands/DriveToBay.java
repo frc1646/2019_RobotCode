@@ -38,7 +38,7 @@ public class DriveToBay extends Command {
     System.out.println(x);
     if (camera.isBayFound()){
       
-      drive.arcadeDrive(1.0 , x/(camera.getWidth()));
+      drive.arcadeDrive(0.0 , -x/(2*camera.getWidth()));
     
     } else {
       double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);

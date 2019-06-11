@@ -24,7 +24,8 @@ public class CameraSubsystem extends Subsystem {
   NetworkTable bayVisionContour;
   
   private static CameraSubsystem instance;
-  double cameraWidth = 158;
+  //double cameraWidth = 158;
+  double cameraWidth = 
   double[] defaultArray = {cameraWidth/2};
 
   public boolean foundBall;

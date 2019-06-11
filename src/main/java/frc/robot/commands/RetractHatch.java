@@ -27,7 +27,7 @@ public class RetractHatch extends Command {
   protected void initialize() {
     startTime = Timer.getFPGATimestamp();
    // hatch.clampHatch();
-    hatch.retractVertPistSolenoid();
+    hatch.retractHorizSolenoid();
     endTime = startTime + 0.1;
   }
 

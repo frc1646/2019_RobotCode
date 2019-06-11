@@ -28,7 +28,7 @@ public class ExtendHatchMech extends Command {
   protected void initialize() {
     endTime = Timer.getFPGATimestamp() + 0.1;
     //hatchSub.unclampHatch();
-    hatchSub.extendVertPistSolenoid();
+    hatchSub.extendHorizPistSolenoid();
   }
 
 

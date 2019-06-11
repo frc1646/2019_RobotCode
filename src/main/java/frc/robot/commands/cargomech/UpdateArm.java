@@ -28,7 +28,7 @@ public class UpdateArm extends Command {
   protected void initialize() {
     
   }
-
+// code functions as of 6/10/2019, allows operator to switch between arm states "up", "down", and "manual"
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {

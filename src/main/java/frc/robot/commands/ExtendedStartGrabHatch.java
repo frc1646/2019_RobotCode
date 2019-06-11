@@ -23,7 +23,7 @@ public class ExtendedStartGrabHatch extends Command {
   @Override
   protected void initialize() {
     hatch.extendVertPistSolenoid();
-    hatch.extendVertPistSolenoid();
+    hatch.extendHorizPistSolenoid();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -45,7 +45,7 @@ public class ExtendedStartGrabHatch extends Command {
     while(startTime + 0.25 > Timer.getFPGATimestamp()){
 
     }
-    hatch.retractVertPistSolenoid();
+    hatch.retractHorizSolenoid();
   }
 
   // Called when another command which requires one or more of the same
