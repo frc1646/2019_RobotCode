@@ -12,6 +12,7 @@ import edu.wpi.cscore.VideoException;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -24,8 +25,8 @@ public class CameraSubsystem extends Subsystem {
   NetworkTable bayVisionContour;
   
   private static CameraSubsystem instance;
-  //double cameraWidth = 158;
-  double cameraWidth = 
+  double cameraWidth = 300;
+  //double cameraWidth = Robot.;
   double[] defaultArray = {cameraWidth/2};
 
   public boolean foundBall;
