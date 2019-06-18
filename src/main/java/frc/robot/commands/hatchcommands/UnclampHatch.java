@@ -5,19 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.hatchcommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.HatchMechanismSubsystem;
 
-public class ExtendHatchMech extends Command {
+public class UnclampHatch extends Command {
 
   private HatchMechanismSubsystem hatchSub;
-  private double endTime;
+  private double startTime;
 
-  public ExtendHatchMech() {
-
+  public UnclampHatch() {
     requires(hatchSub = HatchMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -26,11 +25,9 @@ public class ExtendHatchMech extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    endTime = Timer.getFPGATimestamp() + 0.1;
-    //hatchSub.unclampHatch();
-    hatchSub.extendHorizPistSolenoid();
+    hatchSub.extendVertPistSolenoid();
+    startTime = Timer.getFPGATimestamp();
   }
-
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -40,19 +37,17 @@ public class ExtendHatchMech extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Timer.getFPGATimestamp() >= endTime;
-    //Might change this to true
+    return Timer.getFPGATimestamp() - startTime > 0.1;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSub.closeHorizSolenoid();
-    //hatchSub.retractReleasingPistons();
+    hatchSub.closeVertHatchSolenoid();
   }
 
   // Called when another command which requires one or more of the same
-  // ssubsystems is scheduled to run
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();

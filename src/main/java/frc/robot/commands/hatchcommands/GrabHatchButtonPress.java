@@ -5,25 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.hatchcommands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class PutHatchOnSequence extends CommandGroup {
+public class GrabHatchButtonPress extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public PutHatchOnSequence() {
-    addSequential(new ClampHatch());
-    addSequential(new ExtendHatchMech());
+  public GrabHatchButtonPress() {
     addSequential(new UnclampHatch());
-    addSequential(new RetractHatch());
-   
+    addSequential(new ExtendHatchMech());
+    addSequential(new WaitCommand(.25));
   }
 
-  private Command ClampHatchMech() {
-    return null;
-}
+  protected void interrupted() {
+    end();
+  }
+
+  protected void end() {
+    addSequential(new ClampHatch());
+    addSequential(new WaitCommand(.25));
+    addSequential(new RetractHatch());
+  }
 }

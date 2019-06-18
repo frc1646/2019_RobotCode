@@ -7,17 +7,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.HatchMechanismSubsystem;
 
-public class RetractHatch extends Command {
-  private HatchMechanismSubsystem hatch;
-  private double startTime;
-  private double endTime;
-
-  public RetractHatch() {
-    requires(hatch = HatchMechanismSubsystem.getInstance());
+public class extendHatch extends Command {
+  public extendHatch() {
+    //requires(HatchMechanismSubsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,10 +19,6 @@ public class RetractHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startTime = Timer.getFPGATimestamp();
-   // hatch.clampHatch();
-    hatch.retractHorizSolenoid();
-    endTime = startTime + 0.1;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,20 +29,17 @@ public class RetractHatch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Timer.getFPGATimestamp() >= endTime;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Retract Finished");
-    hatch.closeHorizSolenoid();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
