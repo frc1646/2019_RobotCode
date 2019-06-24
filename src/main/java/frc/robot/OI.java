@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ChangeCargoAngle;
-import frc.robot.commands.ClampHatch;
+import frc.robot.commands.hatchcommands.*;
 import frc.robot.commands.CycleDriveMode;
 import frc.robot.commands.DebugCommandGroup;
 import frc.robot.commands.DriveToBall;
@@ -19,18 +19,13 @@ import frc.robot.commands.DriveToHatchTarget;
 import frc.robot.commands.ExtendClimber;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RetractClimber;
-import frc.robot.commands.RetractHatch;
-import frc.robot.commands.ExtendHatchMech;
 import frc.robot.commands.ExtendedStartGrabHatch;
-import frc.robot.commands.GetHatchSequence;
 import frc.robot.commands.IntakeCargo;
 import frc.robot.commands.OuttakeCargo;
-import frc.robot.commands.PutHatchOnSequence;
 import frc.robot.commands.SetStatusLights;
 import frc.robot.commands.ShiftDown;
 import frc.robot.commands.ShiftUp;
 import frc.robot.commands.TankPIDTest;
-import frc.robot.commands.UnclampHatch;
 import frc.robot.commands.cargomech.SetArmState;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.utils.controller.Logitech;
@@ -78,6 +73,8 @@ public class OI {
     operator_controller.getDPad(Xbox.UP).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.UP));
     operator_controller.getDPad(Xbox.DOWN).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.DOWN));
     operator_controller.getDPad(Xbox.LEFT).whenPressed(new SetArmState(CargoMechanismSubsystem.ArmState.MANUAL));
+    
+    operator_controller.getDPad(Xbox.RIGHT).whileHeld(new GrabHatchButtonPress());
   }
 
   public boolean getIntakeButton() {
