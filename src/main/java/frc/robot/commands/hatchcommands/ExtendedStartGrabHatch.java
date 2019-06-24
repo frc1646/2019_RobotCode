@@ -5,18 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.hatchcommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.HatchMechanismSubsystem;
 
-public class DebugCommand extends Command {
-  private String key;
-  private String name;
-  public DebugCommand(String key, String name) {
-    this.key = key;
-    this.name = name;
-
+public class ExtendedStartGrabHatch extends Command {
+  HatchMechanismSubsystem hatch;
+  public ExtendedStartGrabHatch() {
+    requires(hatch = HatchMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -24,28 +22,36 @@ public class DebugCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    hatch.extendVertPistSolenoid();
+    hatch.extendHorizPistSolenoid();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putString(key, name);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    hatch.retractVertPistSolenoid();
+    double startTime = Timer.getFPGATimestamp();
+    while(startTime + 0.25 > Timer.getFPGATimestamp()){
+
+    }
+    hatch.retractHorizSolenoid();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

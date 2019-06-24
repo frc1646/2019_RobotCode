@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.UpdateShift;
+import frc.robot.commands.shifting.UpdateShift;
 
 /**
  * Add your docs here.

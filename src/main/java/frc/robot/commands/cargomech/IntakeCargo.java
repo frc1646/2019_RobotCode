@@ -5,23 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.cargomech;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.subsystems.CameraSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.utils.controller.Xbox;
+import frc.robot.subsystems.CargoMechanismSubsystem;
 
-public class DriveToBay extends Command {
+public class IntakeCargo extends Command {
+  CargoMechanismSubsystem cargoMech;
 
-  private DriveSubsystem drive;
-  private CameraSubsystem camera;
-
-  public DriveToBay() {
-    requires(drive = DriveSubsystem.getInstance());
-    requires(camera = CameraSubsystem.getInstance());
+  public IntakeCargo() {
+    requires(cargoMech = CargoMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -29,34 +22,14 @@ public class DriveToBay extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    cargoMech.setIntakeRollerPower(-0.9);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double x = camera.getBayCenter();
-    System.out.println(x);
-    if (camera.isBayFound()){
-      
-      drive.arcadeDrive(-0.3 , -x/(camera.getWidth()));
-    
-    } else {
-      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
-      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
-
-      SmartDashboard.putNumber("leftPow", leftPow);
-      SmartDashboard.putNumber("rightPow", rightPow);
-    
-      if (leftPow < 0.05 && leftPow > -0.05) {
-       leftPow = 0;
-      } 
-      if (rightPow < 0.05 && rightPow > -0.05) {
-       rightPow = 0;
-      }
-      drive.arcadeDrive(leftPow, rightPow);
-      }
+    System.out.println("Intaking Cargo");
   }
-  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -67,11 +40,13 @@ public class DriveToBay extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    cargoMech.setIntakeRollerPower(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

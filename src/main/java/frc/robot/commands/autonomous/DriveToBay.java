@@ -5,21 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.PneumaticSubsystem;
-import frc.robot.subsystems.ShiftingSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class ShiftUp extends Command {
+public class DriveToBay extends Command {
 
   private DriveSubsystem drive;
-  private ShiftingSubsystem shifter;
+  private CameraSubsystem camera;
 
-  public ShiftUp() {
-    requires(shifter = ShiftingSubsystem.getInstance());
+  public DriveToBay() {
+    requires(drive = DriveSubsystem.getInstance());
+    requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,18 +29,39 @@ public class ShiftUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    shifter.shiftUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double x = camera.getBayCenter();
+    System.out.println(x);
+    if (camera.isBayFound()){
+      
+      drive.arcadeDrive(-0.3 , -x/(camera.getWidth()));
+    
+    } else {
+      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+
+      SmartDashboard.putNumber("leftPow", leftPow);
+      SmartDashboard.putNumber("rightPow", rightPow);
+    
+      if (leftPow < 0.05 && leftPow > -0.05) {
+       leftPow = 0;
+      } 
+      if (rightPow < 0.05 && rightPow > -0.05) {
+       rightPow = 0;
+      }
+      drive.arcadeDrive(leftPow, rightPow);
+      }
   }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

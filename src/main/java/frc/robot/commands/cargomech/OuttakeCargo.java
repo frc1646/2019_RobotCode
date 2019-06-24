@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.cargomech;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.CargoMechanismSubsystem;

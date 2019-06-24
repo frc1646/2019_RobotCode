@@ -5,20 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class MoveForwardDistance extends Command {
+public class DriveToHatchTarget extends Command {
+  DriveSubsystem drive;
+  CameraSubsystem camera;
 
-  private DriveSubsystem drive;
-  private double startDist;
-  private double endDist;
-
-  public MoveForwardDistance(double distance) {
+  public DriveToHatchTarget() {
     requires(drive = DriveSubsystem.getInstance());
-    this.endDist = distance;
+    requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,21 +28,37 @@ public class MoveForwardDistance extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startDist = drive.getDistance();
-    endDist = startDist + endDist;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(0.5, 0);
-  }
+    double x = camera.getBayCenter();
+    System.out.println("Current center is: " + x);
+    if (camera.isBayFound()){
+    drive.arcadeDrive(0.5, (camera.getBayCenter()/(camera.getWidth() / 2)));
+    } else {
+    double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+
+    SmartDashboard.putNumber("leftPow", leftPow);
+    SmartDashboard.putNumber("rightPow", rightPow);
+  
+    if (leftPow < 0.05 && leftPow > -0.05) {
+     leftPow = 0;
+    } 
+    if (rightPow < 0.05 && rightPow > -0.05) {
+     rightPow = 0;
+    }
+    drive.tankDrive(leftPow, rightPow); }
+    }
+
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    return drive.getDistance() >= endDist;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -52,5 +70,6 @@ public class MoveForwardDistance extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    
   }
 }

@@ -5,21 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class MoveForward extends Command {
+public class DriveToBall extends Command {
+  
+  DriveSubsystem drive;
+  CameraSubsystem camera;
 
-  private DriveSubsystem drive;
-  private double endTime;
-  private double startTime;
 
-  public MoveForward(double time) {
+
+
+
+  public DriveToBall() {
     requires(drive = DriveSubsystem.getInstance());
-    this.endTime = time;
+    requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,26 +33,45 @@ public class MoveForward extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startTime = Timer.getFPGATimestamp();
-    endTime = startTime + endTime;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
+
   protected void execute() {
-    drive.arcadeDrive(0.5, 0);;
+    double x = camera.getX();
+    System.out.println(x);
+    if (camera.isBallFound()){
+      
+      drive.arcadeDrive(1.0 , x/(camera.getWidth()));
+    
+    } else {
+      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+
+      SmartDashboard.putNumber("leftPow", leftPow);
+      SmartDashboard.putNumber("rightPow", rightPow);
+    
+      if (leftPow < 0.05 && leftPow > -0.05) {
+       leftPow = 0;
+      } 
+      if (rightPow < 0.05 && rightPow > -0.05) {
+       rightPow = 0;
+      }
+      drive.arcadeDrive(leftPow, rightPow);
+      }
   }
+   
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Timer.getFPGATimestamp() >= endTime;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    drive.arcadeDrive(0, 0);
   }
 
   // Called when another command which requires one or more of the same
