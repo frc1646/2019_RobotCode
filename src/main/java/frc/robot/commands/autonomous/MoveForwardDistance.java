@@ -5,16 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.CargoMechanismSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class IntakeCargo extends Command {
-  CargoMechanismSubsystem cargoMech;
+public class MoveForwardDistance extends Command {
 
-  public IntakeCargo() {
-    requires(cargoMech = CargoMechanismSubsystem.getInstance());
+  private DriveSubsystem drive;
+  private double startDist;
+  private double endDist;
+
+  public MoveForwardDistance(double distance) {
+    requires(drive = DriveSubsystem.getInstance());
+    this.endDist = distance;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -22,31 +26,31 @@ public class IntakeCargo extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    cargoMech.setIntakeRollerPower(-0.9);
+    startDist = drive.getDistance();
+    endDist = startDist + endDist;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Intaking Cargo");
+    drive.arcadeDrive(0.5, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+
+    return drive.getDistance() >= endDist;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    cargoMech.setIntakeRollerPower(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

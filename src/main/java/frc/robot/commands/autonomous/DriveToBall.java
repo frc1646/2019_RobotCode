@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,11 +14,16 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utils.controller.Xbox;
 
-public class DriveToHatchTarget extends Command {
+public class DriveToBall extends Command {
+  
   DriveSubsystem drive;
   CameraSubsystem camera;
 
-  public DriveToHatchTarget() {
+
+
+
+
+  public DriveToBall() {
     requires(drive = DriveSubsystem.getInstance());
     requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
@@ -32,28 +37,31 @@ public class DriveToHatchTarget extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
+
   protected void execute() {
-    double x = camera.getBayCenter();
-    System.out.println("Current center is: " + x);
-    if (camera.isBayFound()){
-    drive.arcadeDrive(0.5, (camera.getBayCenter()/(camera.getWidth() / 2)));
+    double x = camera.getX();
+    System.out.println(x);
+    if (camera.isBallFound()){
+      
+      drive.arcadeDrive(1.0 , x/(camera.getWidth()));
+    
     } else {
-    double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
-    double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
 
-    SmartDashboard.putNumber("leftPow", leftPow);
-    SmartDashboard.putNumber("rightPow", rightPow);
-  
-    if (leftPow < 0.05 && leftPow > -0.05) {
-     leftPow = 0;
-    } 
-    if (rightPow < 0.05 && rightPow > -0.05) {
-     rightPow = 0;
-    }
-    drive.tankDrive(leftPow, rightPow); }
-    }
-
-  
+      SmartDashboard.putNumber("leftPow", leftPow);
+      SmartDashboard.putNumber("rightPow", rightPow);
+    
+      if (leftPow < 0.05 && leftPow > -0.05) {
+       leftPow = 0;
+      } 
+      if (rightPow < 0.05 && rightPow > -0.05) {
+       rightPow = 0;
+      }
+      drive.arcadeDrive(leftPow, rightPow);
+      }
+  }
+   
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -70,6 +78,5 @@ public class DriveToHatchTarget extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    
   }
 }

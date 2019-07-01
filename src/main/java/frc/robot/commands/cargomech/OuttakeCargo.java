@@ -5,25 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.cargomech;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.HatchMechanismSubsystem;
+import frc.robot.subsystems.CargoMechanismSubsystem;
 
-public class ExtendedStartGrabHatch extends Command {
-  HatchMechanismSubsystem hatch;
-  public ExtendedStartGrabHatch() {
-    requires(hatch = HatchMechanismSubsystem.getInstance());
+
+
+public class OuttakeCargo extends Command {
+  CargoMechanismSubsystem cargoMech;
+
+  public OuttakeCargo() {
+    requires(cargoMech = CargoMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
+
   protected void initialize() {
-    hatch.extendVertPistSolenoid();
-    hatch.extendHorizPistSolenoid();
+    cargoMech.setIntakeRollerPower(0.9);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,12 +42,7 @@ public class ExtendedStartGrabHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatch.retractVertPistSolenoid();
-    double startTime = Timer.getFPGATimestamp();
-    while(startTime + 0.25 > Timer.getFPGATimestamp()){
-
-    }
-    hatch.retractHorizSolenoid();
+    cargoMech.setIntakeRollerPower(0.0);
   }
 
   // Called when another command which requires one or more of the same

@@ -5,13 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.shifting;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PneumaticSubsystem;
+import frc.robot.subsystems.ShiftingSubsystem;
 
-public class extendHatch extends Command {
-  public extendHatch() {
-    //requires(HatchMechanismSubsystem);
+public class ShiftUp extends Command {
+
+  private DriveSubsystem drive;
+  private ShiftingSubsystem shifter;
+
+  public ShiftUp() {
+    requires(shifter = ShiftingSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -19,6 +27,7 @@ public class extendHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    shifter.shiftUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -29,7 +38,7 @@ public class extendHatch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

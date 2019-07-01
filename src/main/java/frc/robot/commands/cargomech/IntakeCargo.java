@@ -5,17 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.cargomech;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.CargoMechanismSubsystem;
 
-
-
-public class OuttakeCargo extends Command {
+public class IntakeCargo extends Command {
   CargoMechanismSubsystem cargoMech;
 
-  public OuttakeCargo() {
+  public IntakeCargo() {
     requires(cargoMech = CargoMechanismSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -23,14 +21,14 @@ public class OuttakeCargo extends Command {
 
   // Called just before this Command runs the first time
   @Override
-
   protected void initialize() {
-    cargoMech.setIntakeRollerPower(0.9);
+    cargoMech.setIntakeRollerPower(-0.9);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("Intaking Cargo");
   }
 
   // Make this return true when this Command no longer needs to run execute()

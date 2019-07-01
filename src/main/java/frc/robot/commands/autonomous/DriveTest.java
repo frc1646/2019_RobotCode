@@ -5,21 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CargoMechanismSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class MoveForward extends Command {
-
+public class DriveTest extends Command {
+  
+  private CargoMechanismSubsystem cargo;
   private DriveSubsystem drive;
-  private double endTime;
-  private double startTime;
 
-  public MoveForward(double time) {
+  public DriveTest() {
     requires(drive = DriveSubsystem.getInstance());
-    this.endTime = time;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,26 +28,28 @@ public class MoveForward extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startTime = Timer.getFPGATimestamp();
-    endTime = startTime + endTime;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(0.5, 0);;
+
+    double leftJoy_Y = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightJoy_Y = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_VERTICAL);
+
+    SmartDashboard.putNumber("encoder count", cargo.getAvgCount());
+    drive.tankDrive(leftJoy_Y, rightJoy_Y);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Timer.getFPGATimestamp() >= endTime;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    drive.arcadeDrive(0, 0);
   }
 
   // Called when another command which requires one or more of the same

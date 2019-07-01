@@ -5,18 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CameraSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class DebugCommand extends Command {
-  private String key;
-  private String name;
-  public DebugCommand(String key, String name) {
-    this.key = key;
-    this.name = name;
+public class DriveToHatchTarget extends Command {
+  DriveSubsystem drive;
+  CameraSubsystem camera;
 
+  public DriveToHatchTarget() {
+    requires(drive = DriveSubsystem.getInstance());
+    requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -29,13 +33,32 @@ public class DebugCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putString(key, name);
-  }
+    double x = camera.getBayCenter();
+    System.out.println("Current center is: " + x);
+    if (camera.isBayFound()){
+    drive.arcadeDrive(0.5, (camera.getBayCenter()/(camera.getWidth() / 2)));
+    } else {
+    double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+    double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+
+    SmartDashboard.putNumber("leftPow", leftPow);
+    SmartDashboard.putNumber("rightPow", rightPow);
+  
+    if (leftPow < 0.05 && leftPow > -0.05) {
+     leftPow = 0;
+    } 
+    if (rightPow < 0.05 && rightPow > -0.05) {
+     rightPow = 0;
+    }
+    drive.tankDrive(leftPow, rightPow); }
+    }
+
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -47,5 +70,6 @@ public class DebugCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    
   }
 }

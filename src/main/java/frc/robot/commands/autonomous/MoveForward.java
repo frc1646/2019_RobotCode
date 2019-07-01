@@ -5,23 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.utils.controller.Xbox;
 
-public class DriveToBay extends Command {
+public class MoveForward extends Command {
 
   private DriveSubsystem drive;
-  private CameraSubsystem camera;
+  private double endTime;
+  private double startTime;
 
-  public DriveToBay() {
+  public MoveForward(double time) {
     requires(drive = DriveSubsystem.getInstance());
-    requires(camera = CameraSubsystem.getInstance());
+    this.endTime = time;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -29,46 +27,26 @@ public class DriveToBay extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    startTime = Timer.getFPGATimestamp();
+    endTime = startTime + endTime;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double x = camera.getBayCenter();
-    //System.out.println(x);
-    if (camera.isBayFound()){
-      
-     drive.arcadeDrive(-0.5, -x/(4*camera.getWidth()));
-     System.out.println(camera.getBayRawArea());
-    
-    } else {
-      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
-      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
-
-      SmartDashboard.putNumber("leftPow", leftPow);
-      SmartDashboard.putNumber("rightPow", rightPow);
-    
-      if (leftPow < 0.05 && leftPow > -0.05) {
-       leftPow = 0;
-      } 
-      if (rightPow < 0.05 && rightPow > -0.05) {
-       rightPow = 0;
-      }
-      drive.arcadeDrive(leftPow, rightPow);
-      }
+    drive.arcadeDrive(0.5, 0);;
   }
-  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  return camera.getBayRawArea() > 10000;
+    return Timer.getFPGATimestamp() >= endTime;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    drive.arcadeDrive( 0.0, 0.0);
+    drive.arcadeDrive(0, 0);
   }
 
   // Called when another command which requires one or more of the same

@@ -5,20 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.controller.Xbox;
 
-public class MoveForwardDistance extends Command {
+public class DriveToBay extends Command {
 
   private DriveSubsystem drive;
-  private double startDist;
-  private double endDist;
+  private CameraSubsystem camera;
 
-  public MoveForwardDistance(double distance) {
+  public DriveToBay() {
     requires(drive = DriveSubsystem.getInstance());
-    this.endDist = distance;
+    requires(camera = CameraSubsystem.getInstance());
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,26 +29,46 @@ public class MoveForwardDistance extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startDist = drive.getDistance();
-    endDist = startDist + endDist;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(0.5, 0);
+    double x = camera.getBayCenter();
+    //System.out.println(x);
+    if (camera.isBayFound()){
+      
+     drive.arcadeDrive(-0.5, -x/(4*camera.getWidth()));
+     System.out.println(camera.getBayRawArea());
+    
+    } else {
+      double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
+      double rightPow = OI.getInstance().getDriver().getAxis(Xbox.RIGHT_HORIZONTAL);
+
+      SmartDashboard.putNumber("leftPow", leftPow);
+      SmartDashboard.putNumber("rightPow", rightPow);
+    
+      if (leftPow < 0.05 && leftPow > -0.05) {
+       leftPow = 0;
+      } 
+      if (rightPow < 0.05 && rightPow > -0.05) {
+       rightPow = 0;
+      }
+      drive.arcadeDrive(leftPow, rightPow);
+      }
   }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    return drive.getDistance() >= endDist;
+  return camera.getBayRawArea() > 10000;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    drive.arcadeDrive( 0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same
