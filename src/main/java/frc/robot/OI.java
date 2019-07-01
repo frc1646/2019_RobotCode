@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoPlaceHatch;
 import frc.robot.commands.ChangeCargoAngle;
 import frc.robot.commands.hatchcommands.*;
 import frc.robot.commands.CycleDriveMode;
@@ -58,8 +59,8 @@ public class OI {
     driver_controller.getButton(Xbox.A).whenPressed(new ShiftDown());
     driver_controller.getButton(Xbox.LB).whileHeld(new DriveToBay());
     
-
-    driver_controller.getButton(Xbox.X).whenPressed(new ExtendClimber());
+    driver_controller.getButton(Xbox.X).whenPressed(new AutoPlaceHatch());
+    //driver_controller.getButton(Xbox.X).whenPressed(new ExtendClimber());
     driver_controller.getButton(Xbox.B).whenPressed(new RetractClimber());
   }
 

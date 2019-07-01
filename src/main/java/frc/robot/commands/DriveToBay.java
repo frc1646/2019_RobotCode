@@ -35,10 +35,11 @@ public class DriveToBay extends Command {
   @Override
   protected void execute() {
     double x = camera.getBayCenter();
-    System.out.println(x);
+    //System.out.println(x);
     if (camera.isBayFound()){
       
-      drive.arcadeDrive(0.0, -x/(camera.getWidth()));
+     drive.arcadeDrive(-0.5, -x/(4*camera.getWidth()));
+     System.out.println(camera.getBayRawArea());
     
     } else {
       double leftPow = OI.getInstance().getDriver().getAxis(Xbox.LEFT_VERTICAL);
@@ -61,12 +62,13 @@ public class DriveToBay extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+  return camera.getBayRawArea() > 10000;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    drive.arcadeDrive( 0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same

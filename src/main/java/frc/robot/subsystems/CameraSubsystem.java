@@ -29,8 +29,10 @@ public class CameraSubsystem extends Subsystem {
   //double cameraWidth = Robot.;
   double[] defaultArray = {cameraWidth/2};
 
+
   public boolean foundBall;
   public boolean foundBay;
+  public double bayArea;
   
 
   public CameraSubsystem() {
@@ -58,6 +60,24 @@ public class CameraSubsystem extends Subsystem {
   public boolean isBayFound() {
     return foundBay;
   }
+
+  public double getBayRawArea() {
+    double[] bayX = bayVisionContour.getNumberArray("area" , defaultArray);
+    if(bayX.length == 0) {
+      bayArea = 0;
+      return defaultArray[0];
+    } else if(bayX.length == 1) {
+      bayArea = bayX[0];
+      return bayX[0];
+    } else {
+      bayArea = bayX[0];
+      return bayX[0];
+    }
+      
+    }
+  
+
+  
 
   public double getRawX() {
     double[] ballX = ballVisionContour.getNumberArray("centerX", defaultArray);
